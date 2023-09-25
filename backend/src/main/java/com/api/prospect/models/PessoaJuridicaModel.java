@@ -15,6 +15,7 @@ public class PessoaJuridicaModel {
   private String cnpj;
   private String corporateName;
   private String mcc;
+  private String contactCPF;
   private String contactName;
   private String contactEmail;
 }
