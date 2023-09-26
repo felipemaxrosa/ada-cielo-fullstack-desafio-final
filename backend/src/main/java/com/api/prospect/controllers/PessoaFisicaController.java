@@ -3,6 +3,7 @@ package com.api.prospect.controllers;
 import com.api.prospect.dtos.PessoaFisicaDto;
 import com.api.prospect.models.PessoaFisicaModel;
 import com.api.prospect.repositories.PessoaFisicaRepository;
+import com.api.prospect.utils.StringUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class PessoaFisicaController {
 
     var pessoaFisicaModel = new PessoaFisicaModel();
     BeanUtils.copyProperties(pessoaFisicaDto, pessoaFisicaModel);
+
+    String formattedCpf = StringUtils.formatToSpecificDigits(pessoaFisicaDto.getCpf(), 11);
+    pessoaFisicaModel.setCpf(formattedCpf);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(pessoaFisicaRepository.save(pessoaFisicaModel));
   }
