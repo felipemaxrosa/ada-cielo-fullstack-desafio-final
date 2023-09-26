@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -36,6 +37,27 @@ public class PessoaFisicaController {
     pessoaFisicaModel.setCpf(formattedCpf);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(pessoaFisicaRepository.save(pessoaFisicaModel));
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Object> updateProspectPessoaFisica(
+          @PathVariable(value = "id") Long id,
+          @RequestBody @Valid PessoaFisicaDto pessoaFisicaDto
+  ) {
+    Optional<PessoaFisicaModel> pessoaFisicaModelOptional = pessoaFisicaRepository.findById(id);
+
+    if (!pessoaFisicaModelOptional.isPresent()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Fisica not found.");
+    }
+
+    var pessoaFisicaModel = new PessoaFisicaModel();
+    BeanUtils.copyProperties(pessoaFisicaDto, pessoaFisicaModel);
+    pessoaFisicaModel.setId(pessoaFisicaModelOptional.get().getId());
+
+    String formattedCpf = StringUtils.formatToSpecificDigits(pessoaFisicaDto.getCpf(), 11);
+    pessoaFisicaModel.setCpf(formattedCpf);
+
+    return ResponseEntity.status(HttpStatus.OK).body(pessoaFisicaRepository.save(pessoaFisicaModel));
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
