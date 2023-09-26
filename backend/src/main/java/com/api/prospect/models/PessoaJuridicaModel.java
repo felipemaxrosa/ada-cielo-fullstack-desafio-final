@@ -19,7 +19,7 @@ public class PessoaJuridicaModel implements Serializable {
   private String cnpj;
   private String corporateName;
   private String mcc;
-  private String contactCPF;
+  private String contactCpf;
   private String contactName;
   private String contactEmail;
 }

@@ -1,8 +1,8 @@
 package com.api.prospect.controllers;
 
-import com.api.prospect.dtos.PessoaFisicaDto;
-import com.api.prospect.models.PessoaFisicaModel;
-import com.api.prospect.repositories.PessoaFisicaRepository;
+import com.api.prospect.dtos.PessoaJuridicaDto;
+import com.api.prospect.models.PessoaJuridicaModel;
+import com.api.prospect.repositories.PessoaJuridicaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +17,21 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/prospect-pessoa-fisica")
-public class PessoaFisicaController {
+@RequestMapping("/prospect-pessoa-juridica")
+public class PessoaJuridicaController {
   @Autowired
-  private PessoaFisicaRepository pessoaFisicaRepository;
+  private PessoaJuridicaRepository pessoaJuridicaRepository;
 
   @PostMapping
-  public ResponseEntity<Object> addNewProspectPessoaFisica(@RequestBody @Valid PessoaFisicaDto pessoaFisicaDto) {
-    if (pessoaFisicaRepository.existsByCpf(pessoaFisicaDto.getCpf())) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: CPF is already in use!");
+  public ResponseEntity<Object> addNewProspectPessoaJuridica(@RequestBody @Valid PessoaJuridicaDto pessoaJuridicaDto) {
+    if (pessoaJuridicaRepository.existsByCnpj(pessoaJuridicaDto.getCnpj())) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: CNPJ is already in use!");
     }
 
-    var pessoaFisicaModel = new PessoaFisicaModel();
-    BeanUtils.copyProperties(pessoaFisicaDto, pessoaFisicaModel);
+    var pessoaJuridicaModel = new PessoaJuridicaModel();
+    BeanUtils.copyProperties(pessoaJuridicaDto, pessoaJuridicaModel);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(pessoaFisicaRepository.save(pessoaFisicaModel));
+    return ResponseEntity.status(HttpStatus.CREATED).body(pessoaJuridicaRepository.save(pessoaJuridicaModel));
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)

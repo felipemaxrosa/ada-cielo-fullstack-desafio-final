@@ -10,7 +10,7 @@ public class PessoaJuridicaDto {
   @Size(max = 14, message = "CNPJ must have at maximum, 14 characters")
   @NotBlank(message = "CNPJ is required")
   @NotNull(message = "CNPJ can not be null")
-  private Long cnpj;
+  private String cnpj;
 
   @Size(max = 50, message = "Corporate name must have at maximum, 50 characters")
   @NotBlank(message = "Corporate name is required")
@@ -25,7 +25,7 @@ public class PessoaJuridicaDto {
   @Size(max = 11, message = "Contact CPF must have at maximum, 11 characters")
   @NotBlank(message = "Contact CPF is required")
   @NotNull(message = "Contact CPF can not be null")
-  private String contactCPF;
+  private String contactCpf;
 
   @Size(max = 50, message = "Contact name must have at maximum, 50 characters")
   @NotBlank(message = "Contact name is required")
@@ -34,6 +34,6 @@ public class PessoaJuridicaDto {
 
   @NotBlank(message = "Email is required")
   @NotNull(message = "Email can not be null")
-//  @Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", message = "Invalid email format")
+  @Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", message = "Invalid email format")
   private String contactEmail;
 }
