@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -36,6 +37,55 @@ public class PessoaFisicaController {
     pessoaFisicaModel.setCpf(formattedCpf);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(pessoaFisicaRepository.save(pessoaFisicaModel));
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Object> updateProspectPessoaFisica(
+          @PathVariable(value = "id") Long id,
+          @RequestBody @Valid PessoaFisicaDto pessoaFisicaDto
+  ) {
+    Optional<PessoaFisicaModel> pessoaFisicaModelOptional = pessoaFisicaRepository.findById(id);
+
+    if (!pessoaFisicaModelOptional.isPresent()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Fisica not found.");
+    }
+
+    var pessoaFisicaModel = new PessoaFisicaModel();
+    BeanUtils.copyProperties(pessoaFisicaDto, pessoaFisicaModel);
+    pessoaFisicaModel.setId(pessoaFisicaModelOptional.get().getId());
+
+    String formattedCpf = StringUtils.formatToSpecificDigits(pessoaFisicaDto.getCpf(), 11);
+    pessoaFisicaModel.setCpf(formattedCpf);
+
+    return ResponseEntity.status(HttpStatus.OK).body(pessoaFisicaRepository.save(pessoaFisicaModel));
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Object> getOneProspectPessoaFisica(@PathVariable(value = "id") Long id) {
+    Optional<PessoaFisicaModel> pessoaFisicaModelOptional = pessoaFisicaRepository.findById(id);
+
+    if (!pessoaFisicaModelOptional.isPresent()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Fisica not found.");
+    }
+
+    return ResponseEntity.status(HttpStatus.OK).body(pessoaFisicaModelOptional.get());
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Object> deleteProspectPessoaFisica(@PathVariable(value = "id") Long id) {
+    Optional<PessoaFisicaModel> pessoaFisicaModelOptional = pessoaFisicaRepository.findById(id);
+
+    if (!pessoaFisicaModelOptional.isPresent()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Fisica not found.");
+    }
+    pessoaFisicaRepository.delete(pessoaFisicaModelOptional.get());
+
+    return ResponseEntity.status(HttpStatus.OK).body("Prospect Pessoa Fisica has been deleted successfully!");
+  }
+
+  @GetMapping
+  public ResponseEntity<Object> getAllProspectPessoaFisica() {
+    return ResponseEntity.status(HttpStatus.OK).body(pessoaFisicaRepository.findAll());
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
