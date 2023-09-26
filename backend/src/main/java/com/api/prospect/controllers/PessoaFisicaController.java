@@ -83,6 +83,11 @@ public class PessoaFisicaController {
     return ResponseEntity.status(HttpStatus.OK).body("Prospect Pessoa Fisica has been deleted successfully!");
   }
 
+  @GetMapping
+  public ResponseEntity<Object> getAllProspectPessoaFisica() {
+    return ResponseEntity.status(HttpStatus.OK).body(pessoaFisicaRepository.findAll());
+  }
+
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
