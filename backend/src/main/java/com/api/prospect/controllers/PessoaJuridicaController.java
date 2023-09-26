@@ -3,6 +3,7 @@ package com.api.prospect.controllers;
 import com.api.prospect.dtos.PessoaJuridicaDto;
 import com.api.prospect.models.PessoaJuridicaModel;
 import com.api.prospect.repositories.PessoaJuridicaRepository;
+import com.api.prospect.utils.StringUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class PessoaJuridicaController {
 
     var pessoaJuridicaModel = new PessoaJuridicaModel();
     BeanUtils.copyProperties(pessoaJuridicaDto, pessoaJuridicaModel);
+
+    String formattedContactCpf = StringUtils.formatToSpecificDigits(pessoaJuridicaDto.getContactCpf(), 11);
+    String formattedCnpj = StringUtils.formatToSpecificDigits(pessoaJuridicaDto.getCnpj(), 14);
+
+    pessoaJuridicaModel.setCnpj(formattedCnpj);
+    pessoaJuridicaModel.setContactCpf(formattedContactCpf);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(pessoaJuridicaRepository.save(pessoaJuridicaModel));
   }
