@@ -60,6 +60,17 @@ public class PessoaFisicaController {
     return ResponseEntity.status(HttpStatus.OK).body(pessoaFisicaRepository.save(pessoaFisicaModel));
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<Object> getOneProspectPessoaFisica(@PathVariable(value = "id") Long id) {
+    Optional<PessoaFisicaModel> pessoaFisicaModelOptional = pessoaFisicaRepository.findById(id);
+
+    if (!pessoaFisicaModelOptional.isPresent()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Fisica not found.");
+    }
+
+    return ResponseEntity.status(HttpStatus.OK).body(pessoaFisicaModelOptional.get());
+  }
+
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
