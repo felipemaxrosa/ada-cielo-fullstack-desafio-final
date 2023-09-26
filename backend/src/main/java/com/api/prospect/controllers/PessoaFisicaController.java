@@ -71,6 +71,18 @@ public class PessoaFisicaController {
     return ResponseEntity.status(HttpStatus.OK).body(pessoaFisicaModelOptional.get());
   }
 
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Object> deleteProspectPessoaFisica(@PathVariable(value = "id") Long id) {
+    Optional<PessoaFisicaModel> pessoaFisicaModelOptional = pessoaFisicaRepository.findById(id);
+
+    if (!pessoaFisicaModelOptional.isPresent()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Fisica not found.");
+    }
+    pessoaFisicaRepository.delete(pessoaFisicaModelOptional.get());
+
+    return ResponseEntity.status(HttpStatus.OK).body("Prospect Pessoa Fisica has been deleted successfully!");
+  }
+
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
