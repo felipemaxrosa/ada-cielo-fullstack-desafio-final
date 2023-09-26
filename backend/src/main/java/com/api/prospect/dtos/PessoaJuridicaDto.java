@@ -7,8 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PessoaJuridicaDto {
-  private Long id;
-
   @Size(max = 14, message = "CNPJ must have at maximum, 14 characters")
   @NotBlank(message = "CNPJ is required")
   @NotNull(message = "CNPJ can not be null")
