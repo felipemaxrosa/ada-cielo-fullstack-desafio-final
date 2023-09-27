@@ -17,14 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ProspectApplicationTests {
-
 	@LocalServerPort
 	private int port;
 
 	private String baseUrl="http://localhost";
 	private String baseUrlPessoaFisica;
-	private String baseUrlPessoaJuridica;
-
 	private static RestTemplate restTemplate;
 
 	@Autowired
@@ -39,7 +36,6 @@ class ProspectApplicationTests {
 	public void setUp() {
 		baseUrl = baseUrl.concat(":").concat(port+"");
 		baseUrlPessoaFisica = baseUrl.concat("/prospect-pessoa-fisica");
-		baseUrlPessoaJuridica = baseUrl.concat("/prospect-pessoa-juridica");
 	}
 
   // Prospect Pessoa Fisica Tests
@@ -106,12 +102,12 @@ class ProspectApplicationTests {
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO TB_PROSPECT_PF (id, cpf, mcc, contact_name, contact_email) VALUES (1, '33333333333', '1234', 'Felipe 3', 'felipe3@test.com')", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO TB_PROSPECT_PF (id, cpf, mcc, contact_name, contact_email) VALUES (10, '33333333333', '1234', 'Felipe 3', 'felipe3@test.com')", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 	public void testDeleteProspectPessoaFisica() {
 		int prospectsCount = h2Repository.findAll().size();
 		assertEquals(1, prospectsCount);
 
-		restTemplate.delete(baseUrlPessoaFisica+"/{id}", 1);
+		restTemplate.delete(baseUrlPessoaFisica+"/{id}", 10);
 		assertEquals(0, h2Repository.findAll().size());
 	}
 
