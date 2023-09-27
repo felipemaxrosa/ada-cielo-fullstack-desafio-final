@@ -22,7 +22,7 @@ public class PessoaFisicaController {
   @Autowired
   private PessoaFisicaRepository pessoaFisicaRepository;
 
-  private Queue<PessoaFisicaModel> prospectQueue = new LinkedList<>();
+  private final Queue<PessoaFisicaModel> prospectQueue = new LinkedList<>();
 
   @PostMapping
   public ResponseEntity<Object> addNewProspectPessoaFisica(@RequestBody @Valid PessoaFisicaDto pessoaFisicaDto) {
@@ -91,17 +91,16 @@ public class PessoaFisicaController {
 
   @GetMapping
   public ResponseEntity<Object> getAllProspectPessoaFisica() {
-//    return ResponseEntity.status(HttpStatus.OK).body(prospectQueue.toArray());
     return ResponseEntity.status(HttpStatus.OK).body(pessoaFisicaRepository.findAll());
   }
 
   @GetMapping("/service-queue")
-  public ResponseEntity<Object> getProspectQueue() {
+  public ResponseEntity<Object> getProspectQueuePessoaFisica() {
     return ResponseEntity.status(HttpStatus.OK).body(prospectQueue.toArray());
   }
 
   @GetMapping("/service-queue/next-prospect")
-  public ResponseEntity<Object> getNextProspectOnTheQueue() {
+  public ResponseEntity<Object> getNextProspectOnTheQueuePessoaFisica() {
     PessoaFisicaModel nextProspect = prospectQueue.poll();
 
     if (nextProspect != null) {
