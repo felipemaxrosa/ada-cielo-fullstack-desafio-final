@@ -58,12 +58,31 @@
 			<version>5.7.2</version> <!-- Use the latest version -->
 			<scope>test</scope>
 		</dependency>
+
+		<!-- SWAGGER -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.0.2</version>
+		</dependency>
 		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-runner</artifactId>
 			<version>1.2.0</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- SWAGGER -->
 	</dependencies>
 
 	<build>
