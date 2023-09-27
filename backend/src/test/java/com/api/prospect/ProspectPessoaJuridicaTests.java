@@ -1,16 +1,20 @@
 package com.api.prospect;
 
+import com.api.prospect.models.PessoaFisicaModel;
 import com.api.prospect.models.PessoaJuridicaModel;
-import com.api.prospect.repositories.TestH2Repository;
+import com.api.prospect.repositories.TestH2PessoaJuridicaRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.web.client.RestTemplate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ProspectPessoaJuridicaTests {
@@ -22,7 +26,7 @@ public class ProspectPessoaJuridicaTests {
   private static RestTemplate restTemplate;
 
   @Autowired
-  private TestH2Repository h2Repository;
+  private TestH2PessoaJuridicaRepository h2Repository;
 
   @BeforeAll
   public static void init() {
@@ -53,6 +57,28 @@ public class ProspectPessoaJuridicaTests {
     if (!response.getCnpj().isEmpty()) {
       assertEquals(pessoaJuridicaModel.getCnpj(), response.getCnpj());
     }
+  }
+
+  @Test
+  @Sql(statements = "INSERT INTO TB_PROSPECT_PJ (id, cnpj, corporate_name, mcc, contact_cpf, contact_name, contact_email) VALUES (1, '57973182000102', 'Micromax Solutions', '1234', '99999999999', 'Felipe Rosa', 'felipe.test@email.com')", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+  @Sql(statements = "DELETE FROM TB_PROSPECT_PJ WHERE id=1", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+  public void testGetProspectPessoaJuridica() {
+    List<PessoaJuridicaModel> prospects = restTemplate.getForObject(baseUrlPessoaJuridica, List.class);
+
+    assertEquals(1, prospects.size());
+    assertEquals(1, h2Repository.findAll().size());
+  }
+
+  @Test
+  @Sql(statements = "INSERT INTO TB_PROSPECT_PJ (id, cnpj, corporate_name, mcc, contact_cpf, contact_name, contact_email) VALUES (1, '57973182000102', 'Micromax Solutions', '1234', '99999999999', 'Felipe Rosa', 'felipe.test@email.com')", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+  @Sql(statements = "DELETE FROM TB_PROSPECT_PJ WHERE id=1", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+  public void testGetProspectPessoaJuridicaById() {
+    PessoaJuridicaModel prospect = restTemplate.getForObject(baseUrlPessoaJuridica+"/{id}", PessoaJuridicaModel.class, 1);
+
+    assertAll(
+            () -> assertNotNull(prospect),
+            () -> assertEquals(1, prospect.getId())
+    );
   }
 
 }

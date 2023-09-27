@@ -1,7 +1,7 @@
 package com.api.prospect;
 
 import com.api.prospect.models.PessoaFisicaModel;
-import com.api.prospect.repositories.TestH2Repository;
+import com.api.prospect.repositories.TestH2PessoaFisicaRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ class ProspectApplicationTests {
 	private static RestTemplate restTemplate;
 
 	@Autowired
-	private TestH2Repository h2Repository;
+	private TestH2PessoaFisicaRepository h2Repository;
 
 	@BeforeAll
 	public static void init() {
