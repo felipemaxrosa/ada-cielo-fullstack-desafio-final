@@ -82,4 +82,27 @@ class ProspectApplicationTests {
 		);
 	}
 
+	@Test
+	@Sql(statements = "INSERT INTO TB_PROSPECT_PF (id, cpf, mcc, contact_name, contact_email) VALUES (1, '22222222222', '1234', 'Felipe 3', 'felipe3@test.com')", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM TB_PROSPECT_PF WHERE id=1", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+	public void testUpdateProspectPessoaFisica() {
+		PessoaFisicaModel pessoaFisicaModel = new PessoaFisicaModel();
+
+		pessoaFisicaModel.setId(1L);
+		pessoaFisicaModel.setCpf("99999999999");
+		pessoaFisicaModel.setMcc("1234");
+		pessoaFisicaModel.setContactEmail("felipe3.updated@test.com");
+		pessoaFisicaModel.setContactName("Felipe 3 updated");
+
+		restTemplate.put(baseUrlPessoaFisica+"/{id}", pessoaFisicaModel, 1);
+
+		PessoaFisicaModel prospectPessoaFisicaFromDB = h2Repository.findById(1L).get();
+
+		assertAll(
+						() -> assertNotNull(prospectPessoaFisicaFromDB),
+						() -> assertEquals(1, prospectPessoaFisicaFromDB.getId()),
+						() -> assertEquals(pessoaFisicaModel.getContactName(), prospectPessoaFisicaFromDB.getContactName())
+		);
+	}
+
 }
