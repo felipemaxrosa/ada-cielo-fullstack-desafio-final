@@ -1,7 +1,10 @@
-import { AppContainer } from './app.styles';
-import { FeedbackForm } from '../feedback-form/feedback-form';
-import { FeedbacksTable } from '../tables';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+
+import { Routes } from '../../routes';
+import { FeedbackForm } from '../forms';
 import { TableData } from '../tables/feedbacks-table/models';
+import { AppContainer } from './app.styles';
+import { APP_ROUTES } from '../../constants';
 
 export function App() {
   function createData(type: string, message: string): TableData {
@@ -30,9 +33,20 @@ export function App() {
   ];
 
   return (
-    <AppContainer>
-      <FeedbackForm />
-      {/* <FeedbacksTable tableRows={mockedTableRows} /> */}
-    </AppContainer>
+    <Router>
+      <AppContainer>
+        <nav>
+          <ul>
+            <li>
+              <Link to={APP_ROUTES.HOME}>Home</Link>
+            </li>
+            <li>
+              <Link to={APP_ROUTES.PROSPECT}>Prospect</Link>
+            </li>
+          </ul>
+        </nav>
+        <Routes />
+      </AppContainer>
+    </Router>
   );
 }

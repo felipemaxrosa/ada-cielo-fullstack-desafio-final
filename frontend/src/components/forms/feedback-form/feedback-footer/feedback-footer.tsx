@@ -1,7 +1,7 @@
 import Stack from '@mui/material/Stack';
 
-import { Button } from '../../form';
-import { useFeedback } from '../../../hooks';
+import { Button } from '../../../form';
+import { useFeedback } from '../../../../hooks';
 
 export const FeedbackFooter = () => {
   const { submitFeedback, loading, state } = useFeedback();
