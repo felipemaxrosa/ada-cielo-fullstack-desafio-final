@@ -1,7 +1,7 @@
 package com.api.prospect;
 
 import com.api.prospect.models.PessoaFisicaModel;
-import com.api.prospect.repositories.TestH2Repository;
+import com.api.prospect.repositories.TestH2PessoaFisicaRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,19 +16,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ProspectApplicationTests {
-
+class ProspectPessoaFisicaTests {
 	@LocalServerPort
 	private int port;
 
 	private String baseUrl="http://localhost";
 	private String baseUrlPessoaFisica;
-	private String baseUrlPessoaJuridica;
-
 	private static RestTemplate restTemplate;
 
 	@Autowired
-	private TestH2Repository h2Repository;
+	private TestH2PessoaFisicaRepository h2Repository;
 
 	@BeforeAll
 	public static void init() {
@@ -39,12 +36,12 @@ class ProspectApplicationTests {
 	public void setUp() {
 		baseUrl = baseUrl.concat(":").concat(port+"");
 		baseUrlPessoaFisica = baseUrl.concat("/prospect-pessoa-fisica");
-		baseUrlPessoaJuridica = baseUrl.concat("/prospect-pessoa-juridica");
 	}
 
   // Prospect Pessoa Fisica Tests
 	// -------------------------------------------------------------
 	@Test
+	@Sql(statements = "DELETE FROM TB_PROSPECT_PF WHERE id=1", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 	public void testAddNewProspectPessoaFisica() {
 		PessoaFisicaModel pessoaFisicaModel = new PessoaFisicaModel();
 
@@ -71,47 +68,47 @@ class ProspectApplicationTests {
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO TB_PROSPECT_PF (id, cpf, mcc, contact_name, contact_email) VALUES (1, '11111111111', '1234', 'Felipe 2', 'felipe2@test.com')", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM TB_PROSPECT_PF WHERE id=1", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO TB_PROSPECT_PF (id, cpf, mcc, contact_name, contact_email) VALUES (2, '11111111111', '1234', 'Felipe 2', 'felipe2@test.com')", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM TB_PROSPECT_PF WHERE id=2", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 	public void testGetProspectPessoaFisicaById() {
-		PessoaFisicaModel prospect = restTemplate.getForObject(baseUrlPessoaFisica+"/{id}", PessoaFisicaModel.class, 1);
+		PessoaFisicaModel prospect = restTemplate.getForObject(baseUrlPessoaFisica+"/{id}", PessoaFisicaModel.class, 2);
 
 		assertAll(
 						() -> assertNotNull(prospect),
-						() -> assertEquals(1, prospect.getId())
+						() -> assertEquals(2, prospect.getId())
 		);
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO TB_PROSPECT_PF (id, cpf, mcc, contact_name, contact_email) VALUES (1, '22222222222', '1234', 'Felipe 3', 'felipe3@test.com')", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM TB_PROSPECT_PF WHERE id=1", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO TB_PROSPECT_PF (id, cpf, mcc, contact_name, contact_email) VALUES (3, '22222222222', '1234', 'Felipe 3', 'felipe3@test.com')", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM TB_PROSPECT_PF WHERE id=3", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 	public void testUpdateProspectPessoaFisica() {
 		PessoaFisicaModel pessoaFisicaModel = new PessoaFisicaModel();
 
-		pessoaFisicaModel.setId(1L);
+		pessoaFisicaModel.setId(3L);
 		pessoaFisicaModel.setCpf("99999999999");
 		pessoaFisicaModel.setMcc("1234");
 		pessoaFisicaModel.setContactEmail("felipe3.updated@test.com");
 		pessoaFisicaModel.setContactName("Felipe 3 updated");
 
-		restTemplate.put(baseUrlPessoaFisica+"/{id}", pessoaFisicaModel, 1);
+		restTemplate.put(baseUrlPessoaFisica+"/{id}", pessoaFisicaModel, 3);
 
-		PessoaFisicaModel prospectPessoaFisicaFromDB = h2Repository.findById(1L).get();
+		PessoaFisicaModel prospectPessoaFisicaFromDB = h2Repository.findById(3L).get();
 
 		assertAll(
 						() -> assertNotNull(prospectPessoaFisicaFromDB),
-						() -> assertEquals(1, prospectPessoaFisicaFromDB.getId()),
+						() -> assertEquals(3, prospectPessoaFisicaFromDB.getId()),
 						() -> assertEquals(pessoaFisicaModel.getContactName(), prospectPessoaFisicaFromDB.getContactName())
 		);
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO TB_PROSPECT_PF (id, cpf, mcc, contact_name, contact_email) VALUES (1, '33333333333', '1234', 'Felipe 3', 'felipe3@test.com')", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO TB_PROSPECT_PF (id, cpf, mcc, contact_name, contact_email) VALUES (4, '33333333333', '1234', 'Felipe 3', 'felipe3@test.com')", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 	public void testDeleteProspectPessoaFisica() {
 		int prospectsCount = h2Repository.findAll().size();
 		assertEquals(1, prospectsCount);
 
-		restTemplate.delete(baseUrlPessoaFisica+"/{id}", 1);
+		restTemplate.delete(baseUrlPessoaFisica+"/{id}", 4);
 		assertEquals(0, h2Repository.findAll().size());
 	}
 
