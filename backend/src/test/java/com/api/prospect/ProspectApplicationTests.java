@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ProspectApplicationTests {
@@ -68,6 +68,18 @@ class ProspectApplicationTests {
 
 		assertEquals(1, prospects.size());
 		assertEquals(1, h2Repository.findAll().size());
+	}
+
+	@Test
+	@Sql(statements = "INSERT INTO TB_PROSPECT_PF (id, cpf, mcc, contact_name, contact_email) VALUES (1, '11111111111', '1234', 'Felipe 2', 'felipe2@test.com')", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM TB_PROSPECT_PF WHERE id=1", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+	public void testGetProspectPessoaFisicaById() {
+		PessoaFisicaModel prospect = restTemplate.getForObject(baseUrlPessoaFisica+"/{id}", PessoaFisicaModel.class, 1);
+
+		assertAll(
+						() -> assertNotNull(prospect),
+						() -> assertEquals(1, prospect.getId())
+		);
 	}
 
 }
