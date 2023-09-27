@@ -14,9 +14,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -24,6 +22,8 @@ import java.util.Optional;
 public class PessoaJuridicaController {
   @Autowired
   private PessoaJuridicaRepository pessoaJuridicaRepository;
+
+  private final Queue<PessoaJuridicaModel> prospectQueue = new LinkedList<>();
 
   @PostMapping
   public ResponseEntity<Object> addNewProspectPessoaJuridica(@RequestBody @Valid PessoaJuridicaDto pessoaJuridicaDto) {
@@ -40,7 +40,10 @@ public class PessoaJuridicaController {
     pessoaJuridicaModel.setCnpj(formattedCnpj);
     pessoaJuridicaModel.setContactCpf(formattedContactCpf);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(pessoaJuridicaRepository.save(pessoaJuridicaModel));
+    PessoaJuridicaModel savedPessoaJuridicaModal = pessoaJuridicaRepository.save(pessoaJuridicaModel);
+    prospectQueue.offer(savedPessoaJuridicaModal);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(savedPessoaJuridicaModal);
   }
 
   @PutMapping("/{id}")
@@ -64,7 +67,10 @@ public class PessoaJuridicaController {
     pessoaJuridicaModel.setCnpj(formattedCnpj);
     pessoaJuridicaModel.setContactCpf(formattedContactCpf);
 
-    return ResponseEntity.status(HttpStatus.OK).body(pessoaJuridicaRepository.save(pessoaJuridicaModel));
+    PessoaJuridicaModel updatedPessoaJuridica = pessoaJuridicaRepository.save(pessoaJuridicaModel);
+    prospectQueue.offer(updatedPessoaJuridica);
+
+    return ResponseEntity.status(HttpStatus.OK).body(updatedPessoaJuridica);
   }
 
   @GetMapping("/{id}")
@@ -95,6 +101,23 @@ public class PessoaJuridicaController {
   public ResponseEntity<Object> getAllProspectPessoaJuridica() {
     return ResponseEntity.status(HttpStatus.OK).body(pessoaJuridicaRepository.findAll());
   }
+
+  @GetMapping("/service-queue")
+  public ResponseEntity<Object> getProspectQueuePessoaJuridica() {
+    return ResponseEntity.status(HttpStatus.OK).body(prospectQueue.toArray());
+  }
+
+  @GetMapping("/service-queue/next-prospect")
+  public ResponseEntity<Object> getNextProspectOnTheQueuePessoaJuridica() {
+    PessoaJuridicaModel nextProspect = prospectQueue.poll();
+
+    if (nextProspect != null) {
+      return ResponseEntity.status(HttpStatus.OK).body(nextProspect);
+    }
+
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The prospect pessoa juridica service queue is empty!");
+  }
+
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(MethodArgumentNotValidException.class)
