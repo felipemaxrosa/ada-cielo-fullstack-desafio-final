@@ -13,9 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -23,6 +21,8 @@ import java.util.Optional;
 public class PessoaFisicaController {
   @Autowired
   private PessoaFisicaRepository pessoaFisicaRepository;
+
+  private Queue<PessoaFisicaModel> prospectQueue = new LinkedList<>();
 
   @PostMapping
   public ResponseEntity<Object> addNewProspectPessoaFisica(@RequestBody @Valid PessoaFisicaDto pessoaFisicaDto) {
@@ -36,7 +36,10 @@ public class PessoaFisicaController {
     String formattedCpf = StringUtils.formatToSpecificDigits(pessoaFisicaDto.getCpf(), 11);
     pessoaFisicaModel.setCpf(formattedCpf);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(pessoaFisicaRepository.save(pessoaFisicaModel));
+    PessoaFisicaModel savedPessoaFisicaModel = pessoaFisicaRepository.save(pessoaFisicaModel);
+    prospectQueue.offer(savedPessoaFisicaModel);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(savedPessoaFisicaModel);
   }
 
   @PutMapping("/{id}")
@@ -57,7 +60,10 @@ public class PessoaFisicaController {
     String formattedCpf = StringUtils.formatToSpecificDigits(pessoaFisicaDto.getCpf(), 11);
     pessoaFisicaModel.setCpf(formattedCpf);
 
-    return ResponseEntity.status(HttpStatus.OK).body(pessoaFisicaRepository.save(pessoaFisicaModel));
+    PessoaFisicaModel updatedPessoaFisica = pessoaFisicaRepository.save(pessoaFisicaModel);
+    prospectQueue.offer(updatedPessoaFisica);
+
+    return ResponseEntity.status(HttpStatus.OK).body(updatedPessoaFisica);
   }
 
   @GetMapping("/{id}")
@@ -85,7 +91,24 @@ public class PessoaFisicaController {
 
   @GetMapping
   public ResponseEntity<Object> getAllProspectPessoaFisica() {
+//    return ResponseEntity.status(HttpStatus.OK).body(prospectQueue.toArray());
     return ResponseEntity.status(HttpStatus.OK).body(pessoaFisicaRepository.findAll());
+  }
+
+  @GetMapping("/service-queue")
+  public ResponseEntity<Object> getProspectQueue() {
+    return ResponseEntity.status(HttpStatus.OK).body(prospectQueue.toArray());
+  }
+
+  @GetMapping("/service-queue/next-prospect")
+  public ResponseEntity<Object> getNextProspectOnTheQueue() {
+    PessoaFisicaModel nextProspect = prospectQueue.poll();
+
+    if (nextProspect != null) {
+      return ResponseEntity.status(HttpStatus.OK).body(nextProspect);
+    }
+
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The prospect pessoa fisica service queue is empty!");
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
