@@ -1,5 +1,6 @@
 import React from 'react';
+import { PessoaFisicaProspectForm } from '../../components/forms';
 
 export const PessoaFisica = () => {
-  return <h1>Pessoa Fisica</h1>;
+  return <PessoaFisicaProspectForm />;
 };
