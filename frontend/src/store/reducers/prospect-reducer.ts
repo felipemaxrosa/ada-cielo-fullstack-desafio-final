@@ -1,9 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import { prospectActions } from '../actions';
-import { PessoaFisicaProspect } from '../../models/interfaces';
+import {
+  PessoaFisicaProspect,
+  PessoaFisicaProspectErrors,
+  ProspectType,
+} from '../../models/interfaces';
 
-export type ProspectType = 'FISICA' | 'JURIDICA';
 export interface ProspectReducerState {
   loading: boolean;
   submitting: boolean;
@@ -14,7 +17,7 @@ export interface ProspectReducerState {
   type: ProspectType;
   fisica: {
     data: PessoaFisicaProspect | null;
-    errors: Record<keyof PessoaFisicaProspect, string> | null;
+    errors: PessoaFisicaProspectErrors | null;
   };
   juridica: {
     data: unknown;
@@ -58,5 +61,51 @@ export const prospectReducer = createReducer(
           fisica: payload.fisica,
         },
       }));
+
+    designer.addCase(prospectActions.clearPessoaFisicaProspect, (state) => ({
+      ...state,
+      fisica: {
+        ...state.fisica,
+        data: null,
+      },
+    }));
+
+    designer.addCase(
+      prospectActions.clearPessoaFisicaProspectErrors,
+      (state) => ({
+        ...state,
+        fisica: {
+          ...state.fisica,
+          errors: null,
+        },
+      })
+    );
+
+    designer.addCase(
+      prospectActions.setPessoaFisicaProspect,
+      (state, { payload }) => ({
+        ...state,
+        fisica: {
+          ...state.fisica,
+          data: payload,
+        },
+      })
+    );
+
+    designer.addCase(
+      prospectActions.setPessoaFisicaProspectErrors,
+      (state, { payload }) => ({
+        ...state,
+        fisica: {
+          ...state.fisica,
+          errors: payload,
+        },
+      })
+    );
+
+    designer.addCase(prospectActions.setProspectType, (state, { payload }) => ({
+      ...state,
+      type: payload,
+    }));
   }
 );

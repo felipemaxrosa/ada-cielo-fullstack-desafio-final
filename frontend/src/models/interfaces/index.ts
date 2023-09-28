@@ -1,2 +1,2 @@
-export * from './Common';
-export * from './PessoaFisicaProspect';
+export * from './prospect';
+export * from './common';
