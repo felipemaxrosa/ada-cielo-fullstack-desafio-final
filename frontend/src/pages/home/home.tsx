@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import { ProspectsPessoaFisicaTable } from '../../components/tables';
 import { useAppSelector } from '../../store';
-import { selectProspectsPessoaFisica } from '../../store/selectors';
+import { selectPessoaFisicaProspectList } from '../../store/selectors';
 
 export const Home = () => {
-  const prospectsPessoaFisica = useAppSelector(selectProspectsPessoaFisica);
+  const prospectsPessoaFisica = useAppSelector(selectPessoaFisicaProspectList);
 
   return (
     <Fragment>

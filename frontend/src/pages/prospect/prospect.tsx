@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const Prospect = () => {
-  return <h1>Prospect</h1>;
+export const PessoaFisica = () => {
+  return <h1>Pessoa Fisica</h1>;
 };

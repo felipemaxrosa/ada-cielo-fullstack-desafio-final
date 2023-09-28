@@ -1,4 +1,5 @@
 import { FC, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Table,
@@ -12,22 +13,27 @@ import {
 
 import { PessoaFisicaProspect, SortOrder } from '../../../models/interfaces';
 import { getComparator, stableSort } from '../../../utils';
-import { FeedbacksTableContainer } from './prospects-pessoa-fisica-table.styles';
-import { PessoaFisicaProspectsTableToolbar } from './prospects-pessoa-fisica-table-toolbar';
-import { ProspectsPessoaFisicaTableHead } from './prospects-pessoa-fisica-table-head';
+import { FeedbacksTableContainer } from './pessoa-fisica-prospects-table.styles';
+import { PessoaFisicaProspectsTableToolbar } from './pessoa-fisica-prospects-table-toolbar';
+import { ProspectsPessoaFisicaTableHead } from './pessoa-fisica-prospects-table-head';
 import { tableHeads } from './constants';
+import { useAppDispatch } from '../../../store';
+import { setPessoaFisicaProspect } from '../../../store/actions/prospect-actions';
+import { APP_ROUTES } from '../../../constants';
 
 interface FeedbacksTableProps {
   tableRows: PessoaFisicaProspect[];
 }
 
-export const ProspectsPessoaFisicaTable: FC<FeedbacksTableProps> = ({
+export const ProspectsPessoaJuridicaTable: FC<FeedbacksTableProps> = ({
   tableRows,
 }) => {
   const [order, setOrder] = useState<SortOrder>('asc');
   const [orderBy, setOrderBy] = useState<keyof PessoaFisicaProspect>('id');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleRequestSort = (property: keyof PessoaFisicaProspect) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -44,6 +50,11 @@ export const ProspectsPessoaFisicaTable: FC<FeedbacksTableProps> = ({
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const handleRowClick = (prospect: PessoaFisicaProspect) => {
+    dispatch(setPessoaFisicaProspect(prospect));
+    navigate(APP_ROUTES.PESSOA_FISICA);
   };
 
   const emptyRows =
@@ -77,7 +88,12 @@ export const ProspectsPessoaFisicaTable: FC<FeedbacksTableProps> = ({
             <TableBody>
               {sortedRows.map((row) => {
                 return (
-                  <TableRow hover key={row.id}>
+                  <TableRow
+                    hover
+                    key={row.id}
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() => handleRowClick(row)}
+                  >
                     <TableCell align="left">{row.id}</TableCell>
                     <TableCell align="left">{row.contactName}</TableCell>
                     <TableCell align="left">{row.cpf}</TableCell>

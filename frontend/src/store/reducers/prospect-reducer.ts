@@ -1,29 +1,56 @@
 import { createReducer } from '@reduxjs/toolkit';
 
+import {
+  PessoaFisicaProspect,
+  PessoaFisicaProspectErrors,
+  PessoaJuridicaProspect,
+  PessoaJuridicaProspectErrors,
+  ProspectType,
+} from '../../models/interfaces';
 import { prospectActions } from '../actions';
-import { PessoaFisicaProspect } from '../../models/interfaces';
 
 export interface ProspectReducerState {
   loading: boolean;
   submitting: boolean;
   prospects: {
     fisica: PessoaFisicaProspect[];
+    juridica: PessoaJuridicaProspect[];
   };
-  selectedProspect: unknown;
+  type: ProspectType;
+  fisica: {
+    data: PessoaFisicaProspect | null;
+    errors: PessoaFisicaProspectErrors | null;
+  };
+  juridica: {
+    data: PessoaJuridicaProspect | null;
+    errors: PessoaJuridicaProspectErrors | null;
+  };
 }
 
 export const prospectReducerInitialState: ProspectReducerState = {
   loading: false,
   prospects: {
     fisica: [],
+    juridica: [],
   },
-  selectedProspect: undefined,
+  fisica: {
+    data: null,
+    errors: null,
+  },
+  juridica: {
+    data: null,
+    errors: null,
+  },
+  type: 'FISICA',
   submitting: false,
 };
 
 export const prospectReducer = createReducer(
   prospectReducerInitialState,
   (designer) => {
+    /**
+     * BOOTSTRAP
+     */
     designer
       .addCase(prospectActions.bootstrap.pending, (state) => ({
         ...state,
@@ -37,5 +64,98 @@ export const prospectReducer = createReducer(
           fisica: payload.fisica,
         },
       }));
+
+    designer.addCase(prospectActions.setProspectType, (state, { payload }) => ({
+      ...state,
+      type: payload,
+    }));
+
+    /**
+     * PESSOA FISICA PROSPECT
+     */
+    designer.addCase(prospectActions.clearPessoaFisicaProspect, (state) => ({
+      ...state,
+      fisica: {
+        ...state.fisica,
+        data: null,
+      },
+    }));
+
+    designer.addCase(
+      prospectActions.clearPessoaFisicaProspectErrors,
+      (state) => ({
+        ...state,
+        fisica: {
+          ...state.fisica,
+          errors: null,
+        },
+      })
+    );
+
+    designer.addCase(
+      prospectActions.setPessoaFisicaProspect,
+      (state, { payload }) => ({
+        ...state,
+        fisica: {
+          ...state.fisica,
+          data: payload,
+        },
+      })
+    );
+
+    designer.addCase(
+      prospectActions.setPessoaFisicaProspectErrors,
+      (state, { payload }) => ({
+        ...state,
+        fisica: {
+          ...state.fisica,
+          errors: payload,
+        },
+      })
+    );
+
+    /**
+     * PESSOA JURIDICA PROSPECT
+     */
+    designer.addCase(prospectActions.clearPessoaJuridicaProspect, (state) => ({
+      ...state,
+      juridica: {
+        ...state.juridica,
+        data: null,
+      },
+    }));
+
+    designer.addCase(
+      prospectActions.clearPessoaJuridicaProspectErrors,
+      (state) => ({
+        ...state,
+        juridica: {
+          ...state.juridica,
+          errors: null,
+        },
+      })
+    );
+
+    designer.addCase(
+      prospectActions.setPessoaJuridicaProspect,
+      (state, { payload }) => ({
+        ...state,
+        juridica: {
+          ...state.juridica,
+          data: payload,
+        },
+      })
+    );
+
+    designer.addCase(
+      prospectActions.setPessoaJuridicaProspectErrors,
+      (state, { payload }) => ({
+        ...state,
+        juridica: {
+          ...state.juridica,
+          errors: payload,
+        },
+      })
+    );
   }
 );
