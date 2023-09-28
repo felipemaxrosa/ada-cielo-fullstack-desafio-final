@@ -1,7 +1,6 @@
 import { SelectChangeEvent } from '@mui/material/Select';
 
 import { SelectField, Form, Input } from '../../../form';
-import { FEEDBACK_TYPE_OPTIONS } from '../../../constants';
 // import { useFeedbackContext } from '../../../../contexts/feedback-context';
 
 export const FeedbackBody = () => {

@@ -1,8 +1,6 @@
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 import { Routes } from '../../routes';
-import { FeedbackForm } from '../forms';
-import { TableData } from '../tables/prospects-pessoa-fisica-table/models';
 import { AppContainer } from './app.styles';
 import { APP_ROUTES } from '../../constants';
 

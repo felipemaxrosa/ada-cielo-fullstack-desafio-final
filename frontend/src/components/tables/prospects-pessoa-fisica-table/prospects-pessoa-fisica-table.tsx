@@ -10,40 +10,26 @@ import {
   Paper,
 } from '@mui/material';
 
-import { SortOrder } from '../../../models/interfaces';
+import { PessoaFisicaProspect, SortOrder } from '../../../models/interfaces';
 import { getComparator, stableSort } from '../../../utils';
-import { FeedbacksTableContainer } from './feedbacks-table.styles';
-import { FeedbacksTableToolbar } from './feedbacks-table-toolbar';
-import { TableData, TableHeadCell } from './models';
-import { FeedbackTableHead } from './feedbacks-table-head';
-
-const tableHeads: TableHeadCell[] = [
-  {
-    id: 'type',
-    numeric: false,
-    disablePadding: false,
-    label: 'Tipo de Feedback',
-  },
-
-  {
-    id: 'message',
-    numeric: false,
-    disablePadding: false,
-    label: 'Mensagem',
-  },
-];
+import { FeedbacksTableContainer } from './prospects-pessoa-fisica-table.styles';
+import { PessoaFisicaProspectsTableToolbar } from './prospects-pessoa-fisica-table-toolbar';
+import { ProspectsPessoaFisicaTableHead } from './prospects-pessoa-fisica-table-head';
+import { tableHeads } from './constants';
 
 interface FeedbacksTableProps {
-  tableRows: TableData[];
+  tableRows: PessoaFisicaProspect[];
 }
 
-export const FeedbacksTable: FC<FeedbacksTableProps> = ({ tableRows }) => {
+export const ProspectsPessoaFisicaTable: FC<FeedbacksTableProps> = ({
+  tableRows,
+}) => {
   const [order, setOrder] = useState<SortOrder>('asc');
-  const [orderBy, setOrderBy] = useState<keyof TableData>('type');
+  const [orderBy, setOrderBy] = useState<keyof PessoaFisicaProspect>('id');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleRequestSort = (property: keyof TableData) => {
+  const handleRequestSort = (property: keyof PessoaFisicaProspect) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -75,27 +61,28 @@ export const FeedbacksTable: FC<FeedbacksTableProps> = ({ tableRows }) => {
   return (
     <FeedbacksTableContainer>
       <Paper>
-        <FeedbacksTableToolbar />
+        <PessoaFisicaProspectsTableToolbar />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
             size="medium"
           >
-            <FeedbackTableHead
+            <ProspectsPessoaFisicaTableHead
               order={order}
               orderBy={orderBy}
               onRequestSort={(_, property) => handleRequestSort(property)}
               heads={tableHeads}
             />
             <TableBody>
-              {sortedRows.map((row, index) => {
-                const rowKey = `feedback-${row.type}-${row.message}`;
-
+              {sortedRows.map((row) => {
                 return (
-                  <TableRow hover key={rowKey}>
-                    <TableCell align="left">{row.type}</TableCell>
-                    <TableCell align="left">{row.message}</TableCell>
+                  <TableRow hover key={row.id}>
+                    <TableCell align="left">{row.id}</TableCell>
+                    <TableCell align="left">{row.contactName}</TableCell>
+                    <TableCell align="left">{row.cpf}</TableCell>
+                    <TableCell align="left">{row.mcc}</TableCell>
+                    <TableCell align="left">{row.contactEmail}</TableCell>
                   </TableRow>
                 );
               })}
@@ -105,7 +92,7 @@ export const FeedbacksTable: FC<FeedbacksTableProps> = ({ tableRows }) => {
                     height: 53 * emptyRows,
                   }}
                 >
-                  <TableCell colSpan={6} align="left" />
+                  <TableCell colSpan={5} align="left" />
                 </TableRow>
               )}
             </TableBody>

@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { pessoaFisicaProspectService } from '../../services';
 import { PessoaFisicaProspect } from '../../models/interfaces';
 

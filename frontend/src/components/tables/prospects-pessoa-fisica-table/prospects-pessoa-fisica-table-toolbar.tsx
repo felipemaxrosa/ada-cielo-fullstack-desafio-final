@@ -1,7 +1,7 @@
 import { Toolbar, Typography } from '@mui/material';
 import { SxProps, Theme } from '@mui/material/styles';
 
-export function FeedbacksTableToolbar() {
+export function PessoaFisicaProspectsTableToolbar() {
   const toolbarSx: SxProps<Theme> = {
     pl: { sm: 2 },
     pr: { xs: 1, sm: 1 },
@@ -15,7 +15,7 @@ export function FeedbacksTableToolbar() {
         id="tableTitle"
         component="div"
       >
-        Feedbacks
+        Pessoa Fisica Prospects
       </Typography>
     </Toolbar>
   );

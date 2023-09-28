@@ -1,7 +1,7 @@
 export type PessoaFisicaProspect = {
-  id?: number;
+  id: number;
   cpf: string;
-  mmc: string;
+  mcc: string;
   contactName: string;
   contactEmail: string;
 };
