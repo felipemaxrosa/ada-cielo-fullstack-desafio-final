@@ -15,7 +15,7 @@ export function PessoaFisicaProspectsTableToolbar() {
         id="tableTitle"
         component="div"
       >
-        Pessoa Fisica Prospects
+        Pessoa Fisica
       </Typography>
     </Toolbar>
   );
