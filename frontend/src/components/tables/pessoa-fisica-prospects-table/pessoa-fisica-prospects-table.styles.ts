@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
-export const FeedbacksTableContainer = styled.div`
+export const PessoaFisicaProspectsTableContainer = styled.div`
   width: 100%;
 `;

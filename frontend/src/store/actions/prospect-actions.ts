@@ -1,6 +1,9 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { pessoaFisicaProspectService } from '../../services';
+import {
+  pessoaFisicaProspectService,
+  pessoaJuridicaProspectService,
+} from '../../services';
 import {
   PessoaFisicaProspect,
   PessoaFisicaProspectErrors,
@@ -30,17 +33,20 @@ const CLEAR_PESSOA_JURIDICA_PROSPECT_ERRORS =
  * GENERAL ACTIONS
  */
 
-export const bootstrap = createAsyncThunk<{ fisica: PessoaFisicaProspect[] }>(
-  BOOTSTRAP,
-  async () => {
-    const { data: pessoaFisicaProspects } =
-      await pessoaFisicaProspectService.getAllProspects();
+export const bootstrap = createAsyncThunk<{
+  fisica: PessoaFisicaProspect[];
+  juridica: PessoaJuridicaProspect[];
+}>(BOOTSTRAP, async () => {
+  const { data: pessoaFisicaProspects } =
+    await pessoaFisicaProspectService.getAllProspects();
+  const { data: pessoaJuridicaProspects } =
+    await pessoaJuridicaProspectService.getAllProspects();
 
-    return {
-      fisica: pessoaFisicaProspects,
-    };
-  }
-);
+  return {
+    fisica: pessoaFisicaProspects,
+    juridica: pessoaJuridicaProspects,
+  };
+});
 export const setProspectType = createAction<ProspectType>(SET_PROSPECT_TYPE);
 
 /**

@@ -11,31 +11,31 @@ import {
   Paper,
 } from '@mui/material';
 
-import { PessoaFisicaProspect, SortOrder } from '../../../models/interfaces';
+import { PessoaJuridicaProspect, SortOrder } from '../../../models/interfaces';
 import { getComparator, stableSort } from '../../../utils';
-import { FeedbacksTableContainer } from './pessoa-fisica-prospects-table.styles';
-import { PessoaFisicaProspectsTableToolbar } from './pessoa-fisica-prospects-table-toolbar';
-import { ProspectsPessoaFisicaTableHead } from './pessoa-fisica-prospects-table-head';
+import { PessoaJuridicaProspectsTableContainer } from './pessoa-juridica-prospects-table.styles';
+import { PessoaJuridicaProspectsTableToolbar } from './pessoa-juridica-prospects-table-toolbar';
+import { PessoaJuridicaProspectsTableHead } from './pessoa-juridica-prospects-table-head';
 import { tableHeads } from './constants';
 import { useAppDispatch } from '../../../store';
-import { setPessoaFisicaProspect } from '../../../store/actions/prospect-actions';
+import { setPessoaJuridicaProspect } from '../../../store/actions/prospect-actions';
 import { APP_ROUTES } from '../../../constants';
 
-interface FeedbacksTableProps {
-  tableRows: PessoaFisicaProspect[];
+interface PessoaJuridicaProspectsTableProps {
+  tableRows: PessoaJuridicaProspect[];
 }
 
-export const ProspectsPessoaJuridicaTable: FC<FeedbacksTableProps> = ({
-  tableRows,
-}) => {
+export const PessoaJuridicaProspectsTable: FC<
+  PessoaJuridicaProspectsTableProps
+> = ({ tableRows }) => {
   const [order, setOrder] = useState<SortOrder>('asc');
-  const [orderBy, setOrderBy] = useState<keyof PessoaFisicaProspect>('id');
+  const [orderBy, setOrderBy] = useState<keyof PessoaJuridicaProspect>('id');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleRequestSort = (property: keyof PessoaFisicaProspect) => {
+  const handleRequestSort = (property: keyof PessoaJuridicaProspect) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -52,9 +52,9 @@ export const ProspectsPessoaJuridicaTable: FC<FeedbacksTableProps> = ({
     setPage(0);
   };
 
-  const handleRowClick = (prospect: PessoaFisicaProspect) => {
-    dispatch(setPessoaFisicaProspect(prospect));
-    navigate(APP_ROUTES.PESSOA_FISICA);
+  const handleRowClick = (prospect: PessoaJuridicaProspect) => {
+    dispatch(setPessoaJuridicaProspect(prospect));
+    navigate(APP_ROUTES.PESSOA_JURIDICA);
   };
 
   const emptyRows =
@@ -70,16 +70,16 @@ export const ProspectsPessoaJuridicaTable: FC<FeedbacksTableProps> = ({
   );
 
   return (
-    <FeedbacksTableContainer>
+    <PessoaJuridicaProspectsTableContainer>
       <Paper>
-        <PessoaFisicaProspectsTableToolbar />
+        <PessoaJuridicaProspectsTableToolbar />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
             size="medium"
           >
-            <ProspectsPessoaFisicaTableHead
+            <PessoaJuridicaProspectsTableHead
               order={order}
               orderBy={orderBy}
               onRequestSort={(_, property) => handleRequestSort(property)}
@@ -95,9 +95,11 @@ export const ProspectsPessoaJuridicaTable: FC<FeedbacksTableProps> = ({
                     onClick={() => handleRowClick(row)}
                   >
                     <TableCell align="left">{row.id}</TableCell>
-                    <TableCell align="left">{row.contactName}</TableCell>
-                    <TableCell align="left">{row.cpf}</TableCell>
+                    <TableCell align="left">{row.cnpj}</TableCell>
+                    <TableCell align="left">{row.corporateName}</TableCell>
                     <TableCell align="left">{row.mcc}</TableCell>
+                    <TableCell align="left">{row.contactCpf}</TableCell>
+                    <TableCell align="left">{row.contactName}</TableCell>
                     <TableCell align="left">{row.contactEmail}</TableCell>
                   </TableRow>
                 );
@@ -124,6 +126,6 @@ export const ProspectsPessoaJuridicaTable: FC<FeedbacksTableProps> = ({
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </FeedbacksTableContainer>
+    </PessoaJuridicaProspectsTableContainer>
   );
 };

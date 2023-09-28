@@ -7,23 +7,28 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 
-import { SortOrder, PessoaFisicaProspect } from '../../../models/interfaces';
+import {
+  SortOrder,
+  PessoaJuridicaProspectKeys,
+} from '../../../models/interfaces';
 import { TableHeadCell } from './models';
 
-interface FeedbackTableHeadProps {
+interface PessoaJuridicaProspectsTableHeadProps {
   onRequestSort: (
     event: React.MouseEvent<unknown>,
-    property: keyof PessoaFisicaProspect
+    property: PessoaJuridicaProspectKeys
   ) => void;
   order: SortOrder;
   orderBy: string;
   heads: TableHeadCell[];
 }
 
-export function ProspectsPessoaFisicaTableHead(props: FeedbackTableHeadProps) {
+export function PessoaJuridicaProspectsTableHead(
+  props: PessoaJuridicaProspectsTableHeadProps
+) {
   const { order, orderBy, onRequestSort, heads } = props;
   const createSortHandler =
-    (property: keyof PessoaFisicaProspect) =>
+    (property: PessoaJuridicaProspectKeys) =>
     (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };

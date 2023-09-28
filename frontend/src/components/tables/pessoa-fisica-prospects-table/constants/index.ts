@@ -23,12 +23,12 @@ export const tableHeads: TableHeadCell[] = [
     id: 'mcc',
     numeric: false,
     disablePadding: false,
-    label: 'MMC',
+    label: 'MCC',
   },
   {
     id: 'contactEmail',
     numeric: false,
     disablePadding: false,
-    label: 'Email de contato',
+    label: 'Email do contato',
   },
 ];
