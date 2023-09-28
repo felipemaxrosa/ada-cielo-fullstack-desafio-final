@@ -1,17 +1,22 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import { prospectActions } from '../actions';
+import { PessoaFisicaProspect } from '../../models/interfaces';
 
 export interface ProspectReducerState {
   loading: boolean;
   submitting: boolean;
-  prospects: unknown;
+  prospects: {
+    fisica: PessoaFisicaProspect[];
+  };
   selectedProspect: unknown;
 }
 
 export const prospectReducerInitialState: ProspectReducerState = {
   loading: false,
-  prospects: [],
+  prospects: {
+    fisica: [],
+  },
   selectedProspect: undefined,
   submitting: false,
 };
@@ -27,7 +32,10 @@ export const prospectReducer = createReducer(
       .addCase(prospectActions.bootstrap.fulfilled, (state, { payload }) => ({
         ...state,
         loading: false,
-        prospects: payload,
+        prospects: {
+          ...state.prospects,
+          fisica: payload.fisica,
+        },
       }));
   }
 );

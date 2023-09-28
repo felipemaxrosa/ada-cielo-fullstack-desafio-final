@@ -1,1 +1,1 @@
-export * from "./feedbacks-table";
+export * from './prospects-pessoa-fisica-table';
