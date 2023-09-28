@@ -115,6 +115,17 @@ export const prospectReducer = createReducer(
       })
     );
 
+    designer.addCase(
+      prospectActions.onChangePessoaFisicaProspect,
+      (state, { payload }) => ({
+        ...state,
+        fisica: {
+          ...state.fisica,
+          [payload.name]: payload.value,
+        },
+      })
+    );
+
     /**
      * PESSOA JURIDICA PROSPECT
      */

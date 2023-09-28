@@ -7,6 +7,7 @@ import {
 import {
   PessoaFisicaProspect,
   PessoaFisicaProspectErrors,
+  PessoaFisicaProspectKeys,
   PessoaJuridicaProspect,
   ProspectType,
 } from '../../models/interfaces';
@@ -20,6 +21,7 @@ const SET_PESSOA_FISICA_PROSPECT_ERRORS =
 const CLEAR_PESSOA_FISICA_PROSPECT = 'PROSPECT/CLEAR_PESSOA_FISICA_PROSPECT';
 const CLEAR_PESSOA_FISICA_PROSPECT_ERRORS =
   'PROSPECT/CLEAR_PESSOA_FISICA_PROSPECT_ERRORS';
+const PESSOA_FISICA_ON_CHANGE = 'PESSOA_FISICA_ON_CHANGE';
 
 const SET_PESSOA_JURIDICA_PROSPECT = 'PROSPECT/SET_PESSOA_JURIDICA_PROSPECT';
 const SET_PESSOA_JURIDICA_PROSPECT_ERRORS =
@@ -28,6 +30,7 @@ const CLEAR_PESSOA_JURIDICA_PROSPECT =
   'PROSPECT/CLEAR_PESSOA_JURIDICA_PROSPECT';
 const CLEAR_PESSOA_JURIDICA_PROSPECT_ERRORS =
   'PROSPECT/CLEAR_PESSOA_JURIDICA_PROSPECT_ERRORS';
+const PESSOA_JURIDICA_ON_CHANGE = 'PESSOA_JURIDICA_ON_CHANGE';
 
 /**
  * GENERAL ACTIONS
@@ -63,6 +66,12 @@ export const clearPessoaFisicaProspect = createAction(
 export const clearPessoaFisicaProspectErrors = createAction(
   CLEAR_PESSOA_FISICA_PROSPECT_ERRORS
 );
+type OnChangePessoaFisicaProspect = {
+  name: PessoaFisicaProspectKeys;
+  value: string;
+};
+export const onChangePessoaFisicaProspect =
+  createAction<OnChangePessoaFisicaProspect>(PESSOA_FISICA_ON_CHANGE);
 
 /**
  * PESSOA JURIDICA PROSPECT
