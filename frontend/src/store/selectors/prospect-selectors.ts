@@ -2,16 +2,22 @@ import { RootState } from '..';
 
 export const selectProspectType = (state: RootState) => state.prospect.type;
 
-export const selectProspectPessoaFisica = (state: RootState) =>
+export const selectPessoaFisicaProspect = (state: RootState) =>
   state.prospect.fisica.data;
-export const selectProspectPessoaFisicaErrors = (state: RootState) =>
+export const selectPessoaFisicaProspectErrors = (state: RootState) =>
   state.prospect.fisica.errors;
-export const selectProspectPessoaFisicaList = (state: RootState) =>
+export const selectPessoaFisicaProspectList = (state: RootState) =>
   state.prospect.prospects.fisica;
+export const hasPessoaFisicaProspectErrors = (state: RootState) =>
+  state.prospect.fisica.errors !== null &&
+  Object.keys(state.prospect.fisica.errors).length > 0;
 
-export const selectProspectPessoaJuridica = (state: RootState) =>
+export const selectPessoaJuridicaProspect = (state: RootState) =>
   state.prospect.juridica.data;
-export const selectProspectPessoaJuridicaErrors = (state: RootState) =>
+export const selectPessoaJuridicaProspectErrors = (state: RootState) =>
   state.prospect.juridica.errors;
-export const selectProspectPessoaJuridicaList = (state: RootState) =>
+export const selectPessoaJuridicaProspectList = (state: RootState) =>
   state.prospect.prospects.juridica;
+export const hasPessoaJuridicaProspectErrors = (state: RootState) =>
+  state.prospect.juridica.errors !== null &&
+  Object.keys(state.prospect.juridica.errors).length > 0;

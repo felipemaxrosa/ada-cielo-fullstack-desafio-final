@@ -4,6 +4,7 @@ import { pessoaFisicaProspectService } from '../../services';
 import {
   PessoaFisicaProspect,
   PessoaFisicaProspectErrors,
+  PessoaJuridicaProspect,
   ProspectType,
 } from '../../models/interfaces';
 
@@ -16,6 +17,14 @@ const SET_PESSOA_FISICA_PROSPECT_ERRORS =
 const CLEAR_PESSOA_FISICA_PROSPECT = 'PROSPECT/CLEAR_PESSOA_FISICA_PROSPECT';
 const CLEAR_PESSOA_FISICA_PROSPECT_ERRORS =
   'PROSPECT/CLEAR_PESSOA_FISICA_PROSPECT_ERRORS';
+
+const SET_PESSOA_JURIDICA_PROSPECT = 'PROSPECT/SET_PESSOA_JURIDICA_PROSPECT';
+const SET_PESSOA_JURIDICA_PROSPECT_ERRORS =
+  'PROSPECT/SET_PESSOA_JURIDICA_PROSPECT_ERRORS';
+const CLEAR_PESSOA_JURIDICA_PROSPECT =
+  'PROSPECT/CLEAR_PESSOA_JURIDICA_PROSPECT';
+const CLEAR_PESSOA_JURIDICA_PROSPECT_ERRORS =
+  'PROSPECT/CLEAR_PESSOA_JURIDICA_PROSPECT_ERRORS';
 
 /**
  * GENERAL ACTIONS
@@ -52,3 +61,14 @@ export const clearPessoaFisicaProspectErrors = createAction(
 /**
  * PESSOA JURIDICA PROSPECT
  */
+export const setPessoaJuridicaProspect = createAction<PessoaJuridicaProspect>(
+  SET_PESSOA_JURIDICA_PROSPECT
+);
+export const setPessoaJuridicaProspectErrors =
+  createAction<PessoaFisicaProspectErrors>(SET_PESSOA_JURIDICA_PROSPECT_ERRORS);
+export const clearPessoaJuridicaProspect = createAction(
+  CLEAR_PESSOA_JURIDICA_PROSPECT
+);
+export const clearPessoaJuridicaProspectErrors = createAction(
+  CLEAR_PESSOA_JURIDICA_PROSPECT_ERRORS
+);

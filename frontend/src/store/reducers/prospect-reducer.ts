@@ -1,18 +1,20 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { prospectActions } from '../actions';
 import {
   PessoaFisicaProspect,
   PessoaFisicaProspectErrors,
+  PessoaJuridicaProspect,
+  PessoaJuridicaProspectErrors,
   ProspectType,
 } from '../../models/interfaces';
+import { prospectActions } from '../actions';
 
 export interface ProspectReducerState {
   loading: boolean;
   submitting: boolean;
   prospects: {
     fisica: PessoaFisicaProspect[];
-    juridica: any[];
+    juridica: PessoaJuridicaProspect[];
   };
   type: ProspectType;
   fisica: {
@@ -20,10 +22,9 @@ export interface ProspectReducerState {
     errors: PessoaFisicaProspectErrors | null;
   };
   juridica: {
-    data: unknown;
-    errors: Record<string, string> | null;
+    data: PessoaJuridicaProspect | null;
+    errors: PessoaJuridicaProspectErrors | null;
   };
-  selectedProspect: unknown;
 }
 
 export const prospectReducerInitialState: ProspectReducerState = {
@@ -41,13 +42,15 @@ export const prospectReducerInitialState: ProspectReducerState = {
     errors: null,
   },
   type: 'FISICA',
-  selectedProspect: undefined,
   submitting: false,
 };
 
 export const prospectReducer = createReducer(
   prospectReducerInitialState,
   (designer) => {
+    /**
+     * BOOTSTRAP
+     */
     designer
       .addCase(prospectActions.bootstrap.pending, (state) => ({
         ...state,
@@ -62,6 +65,14 @@ export const prospectReducer = createReducer(
         },
       }));
 
+    designer.addCase(prospectActions.setProspectType, (state, { payload }) => ({
+      ...state,
+      type: payload,
+    }));
+
+    /**
+     * PESSOA FISICA PROSPECT
+     */
     designer.addCase(prospectActions.clearPessoaFisicaProspect, (state) => ({
       ...state,
       fisica: {
@@ -103,9 +114,48 @@ export const prospectReducer = createReducer(
       })
     );
 
-    designer.addCase(prospectActions.setProspectType, (state, { payload }) => ({
+    /**
+     * PESSOA JURIDICA PROSPECT
+     */
+    designer.addCase(prospectActions.clearPessoaJuridicaProspect, (state) => ({
       ...state,
-      type: payload,
+      juridica: {
+        ...state.juridica,
+        data: null,
+      },
     }));
+
+    designer.addCase(
+      prospectActions.clearPessoaJuridicaProspectErrors,
+      (state) => ({
+        ...state,
+        juridica: {
+          ...state.juridica,
+          errors: null,
+        },
+      })
+    );
+
+    designer.addCase(
+      prospectActions.setPessoaJuridicaProspect,
+      (state, { payload }) => ({
+        ...state,
+        juridica: {
+          ...state.juridica,
+          data: payload,
+        },
+      })
+    );
+
+    designer.addCase(
+      prospectActions.setPessoaJuridicaProspectErrors,
+      (state, { payload }) => ({
+        ...state,
+        juridica: {
+          ...state.juridica,
+          errors: payload,
+        },
+      })
+    );
   }
 );
