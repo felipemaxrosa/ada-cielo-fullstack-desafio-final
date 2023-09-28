@@ -1,27 +1,18 @@
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Container } from '@mui/material';
 
 import { Routes } from '../../routes';
-import { AppContainer } from './app.styles';
-import { APP_ROUTES } from '../../constants';
+import { Toolbar } from '../toolbar/toolbar';
 
 export function App() {
   return (
     <Router>
-      <AppContainer>
-        <nav>
-          <ul>
-            <li>
-              <Link to={APP_ROUTES.HOME}>Home</Link>
-            </li>
-            <li>
-              <Link to={APP_ROUTES.PROSPECT}>Prospect</Link>
-            </li>
-          </ul>
-        </nav>
+      <Container disableGutters>
+        <Toolbar />
         <main>
           <Routes />
         </main>
-      </AppContainer>
+      </Container>
     </Router>
   );
 }
