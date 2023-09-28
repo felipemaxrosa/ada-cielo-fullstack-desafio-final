@@ -13,7 +13,7 @@ import {
 
 import { PessoaFisicaProspect, SortOrder } from '../../../models/interfaces';
 import { getComparator, stableSort } from '../../../utils';
-import { FeedbacksTableContainer } from './pessoa-fisica-prospects-table.styles';
+import { PessoaFisicaProspectsTableContainer } from './pessoa-fisica-prospects-table.styles';
 import { PessoaFisicaProspectsTableToolbar } from './pessoa-fisica-prospects-table-toolbar';
 import { ProspectsPessoaFisicaTableHead } from './pessoa-fisica-prospects-table-head';
 import { tableHeads } from './constants';
@@ -21,13 +21,13 @@ import { useAppDispatch } from '../../../store';
 import { setPessoaFisicaProspect } from '../../../store/actions/prospect-actions';
 import { APP_ROUTES } from '../../../constants';
 
-interface FeedbacksTableProps {
+interface PessoaFisicaProspectsTableProps {
   tableRows: PessoaFisicaProspect[];
 }
 
-export const ProspectsPessoaFisicaTable: FC<FeedbacksTableProps> = ({
-  tableRows,
-}) => {
+export const PessoaFisicaProspectsTable: FC<
+  PessoaFisicaProspectsTableProps
+> = ({ tableRows }) => {
   const [order, setOrder] = useState<SortOrder>('asc');
   const [orderBy, setOrderBy] = useState<keyof PessoaFisicaProspect>('id');
   const [page, setPage] = useState(0);
@@ -70,7 +70,7 @@ export const ProspectsPessoaFisicaTable: FC<FeedbacksTableProps> = ({
   );
 
   return (
-    <FeedbacksTableContainer>
+    <PessoaFisicaProspectsTableContainer>
       <Paper>
         <PessoaFisicaProspectsTableToolbar />
         <TableContainer>
@@ -124,6 +124,6 @@ export const ProspectsPessoaFisicaTable: FC<FeedbacksTableProps> = ({
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </FeedbacksTableContainer>
+    </PessoaFisicaProspectsTableContainer>
   );
 };

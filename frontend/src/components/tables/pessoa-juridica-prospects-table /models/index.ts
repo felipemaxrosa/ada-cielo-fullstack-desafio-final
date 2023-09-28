@@ -1,8 +1,8 @@
-import { PessoaFisicaProspect } from '../../../../models/interfaces';
+import { PessoaJuridicaProspect } from '../../../../models/interfaces';
 
 export interface TableHeadCell {
   disablePadding: boolean;
-  id: keyof PessoaFisicaProspect;
+  id: keyof PessoaJuridicaProspect;
   label: string;
   numeric: boolean;
 }

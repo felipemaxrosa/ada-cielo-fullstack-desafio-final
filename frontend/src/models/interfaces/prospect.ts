@@ -8,7 +8,7 @@ export type PessoaFisicaProspect = {
   contactEmail: string;
 };
 
-type PessoaFisicaProspectKeys = keyof PessoaFisicaProspect;
+export type PessoaFisicaProspectKeys = keyof PessoaFisicaProspect;
 export type PessoaFisicaProspectErrors = Partial<
   Record<PessoaFisicaProspectKeys, string>
 >;
@@ -22,7 +22,7 @@ export type PessoaJuridicaProspect = {
   contactName: string;
   contactEmail: string;
 };
-type PessoaJuridicaProspectKeys = keyof PessoaJuridicaProspect;
+export type PessoaJuridicaProspectKeys = keyof PessoaJuridicaProspect;
 export type PessoaJuridicaProspectErrors = Partial<
   Record<PessoaJuridicaProspectKeys, string>
 >;

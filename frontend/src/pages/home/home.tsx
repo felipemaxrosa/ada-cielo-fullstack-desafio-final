@@ -1,14 +1,25 @@
 import React, { Fragment } from 'react';
-import { ProspectsPessoaFisicaTable } from '../../components/tables';
+import {
+  PessoaFisicaProspectsTable,
+  PessoaJuridicaProspectsTable,
+} from '../../components/tables';
 import { useAppSelector } from '../../store';
-import { selectPessoaFisicaProspectList } from '../../store/selectors';
+import {
+  selectPessoaFisicaProspectList,
+  selectPessoaJuridicaProspectList,
+} from '../../store/selectors';
+import { PageContainer } from '../../styles/container';
 
 export const Home = () => {
-  const prospectsPessoaFisica = useAppSelector(selectPessoaFisicaProspectList);
+  const pessoaFisicaProspects = useAppSelector(selectPessoaFisicaProspectList);
+  const pessoaJuridicaProspects = useAppSelector(
+    selectPessoaJuridicaProspectList
+  );
 
   return (
-    <Fragment>
-      <ProspectsPessoaFisicaTable tableRows={prospectsPessoaFisica} />
-    </Fragment>
+    <PageContainer>
+      <PessoaFisicaProspectsTable tableRows={pessoaFisicaProspects} />
+      <PessoaJuridicaProspectsTable tableRows={pessoaJuridicaProspects} />
+    </PageContainer>
   );
 };

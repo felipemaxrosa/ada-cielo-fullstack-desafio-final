@@ -8,27 +8,39 @@ export const tableHeads: TableHeadCell[] = [
     label: '#ID',
   },
   {
+    id: 'cnpj',
+    numeric: false,
+    disablePadding: false,
+    label: 'CNPJ',
+  },
+  {
+    id: 'corporateName',
+    numeric: false,
+    disablePadding: false,
+    label: 'Razao Social',
+  },
+  {
+    id: 'mcc',
+    numeric: false,
+    disablePadding: false,
+    label: 'MCC',
+  },
+  {
+    id: 'contactCpf',
+    numeric: false,
+    disablePadding: false,
+    label: 'CPF do contato',
+  },
+  {
     id: 'contactName',
     numeric: false,
     disablePadding: false,
     label: 'Nome do contato',
   },
   {
-    id: 'cpf',
-    numeric: false,
-    disablePadding: false,
-    label: 'CPF',
-  },
-  {
-    id: 'mcc',
-    numeric: false,
-    disablePadding: false,
-    label: 'MMC',
-  },
-  {
     id: 'contactEmail',
     numeric: false,
     disablePadding: false,
-    label: 'Email de contato',
+    label: 'Email do contato',
   },
 ];
