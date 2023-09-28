@@ -62,6 +62,7 @@ export const prospectReducer = createReducer(
         prospects: {
           ...state.prospects,
           fisica: payload.fisica,
+          juridica: payload.juridica,
         },
       }));
 
