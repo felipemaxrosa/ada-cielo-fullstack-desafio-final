@@ -8,4 +8,15 @@ function getAllProspects() {
   );
 }
 
-export { getAllProspects };
+function addProspect(prospect: PessoaJuridicaProspect) {
+  return api.post(SERVICES_URL.PROSPECT_PESSOA_JURIDICA.BASE_URL, prospect);
+}
+
+function updateProspect(prospect: PessoaJuridicaProspect) {
+  return api.put(
+    `${SERVICES_URL.PROSPECT_PESSOA_JURIDICA.BASE_URL}/${prospect.id}`,
+    prospect
+  );
+}
+
+export { getAllProspects, addProspect, updateProspect };
