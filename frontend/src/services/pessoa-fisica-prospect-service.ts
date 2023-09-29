@@ -8,4 +8,15 @@ function getAllProspects() {
   );
 }
 
-export { getAllProspects };
+function addProspect(prospect: PessoaFisicaProspect) {
+  return api.post(SERVICES_URL.PROSPECT_PESSOA_FISICA.BASE_URL, prospect);
+}
+
+function updateProspect(prospect: PessoaFisicaProspect) {
+  return api.put(
+    `${SERVICES_URL.PROSPECT_PESSOA_FISICA.BASE_URL}/${prospect.id}`,
+    prospect
+  );
+}
+
+export { getAllProspects, updateProspect, addProspect };

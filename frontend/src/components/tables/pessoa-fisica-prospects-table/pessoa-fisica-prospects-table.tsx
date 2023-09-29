@@ -13,7 +13,6 @@ import {
 
 import { PessoaFisicaProspect, SortOrder } from '../../../models/interfaces';
 import { getComparator, stableSort } from '../../../utils';
-import { PessoaFisicaProspectsTableContainer } from './pessoa-fisica-prospects-table.styles';
 import { PessoaFisicaProspectsTableToolbar } from './pessoa-fisica-prospects-table-toolbar';
 import { ProspectsPessoaFisicaTableHead } from './pessoa-fisica-prospects-table-head';
 import { tableHeads } from './constants';
@@ -70,60 +69,58 @@ export const PessoaFisicaProspectsTable: FC<
   );
 
   return (
-    <PessoaFisicaProspectsTableContainer>
-      <Paper>
-        <PessoaFisicaProspectsTableToolbar />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size="medium"
-          >
-            <ProspectsPessoaFisicaTableHead
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={(_, property) => handleRequestSort(property)}
-              heads={tableHeads}
-            />
-            <TableBody>
-              {sortedRows.map((row) => {
-                return (
-                  <TableRow
-                    hover
-                    key={row.id}
-                    sx={{ cursor: 'pointer' }}
-                    onClick={() => handleRowClick(row)}
-                  >
-                    <TableCell align="left">{row.id}</TableCell>
-                    <TableCell align="left">{row.contactName}</TableCell>
-                    <TableCell align="left">{row.cpf}</TableCell>
-                    <TableCell align="left">{row.mcc}</TableCell>
-                    <TableCell align="left">{row.contactEmail}</TableCell>
-                  </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
+    <Paper>
+      <PessoaFisicaProspectsTableToolbar />
+      <TableContainer>
+        <Table
+          sx={{ minWidth: 750 }}
+          aria-labelledby="tableTitle"
+          size="medium"
+        >
+          <ProspectsPessoaFisicaTableHead
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={(_, property) => handleRequestSort(property)}
+            heads={tableHeads}
+          />
+          <TableBody>
+            {sortedRows.map((row) => {
+              return (
                 <TableRow
-                  style={{
-                    height: 53 * emptyRows,
-                  }}
+                  hover
+                  key={row.id}
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => handleRowClick(row)}
                 >
-                  <TableCell colSpan={5} align="left" />
+                  <TableCell align="left">{row.id}</TableCell>
+                  <TableCell align="left">{row.contactName}</TableCell>
+                  <TableCell align="left">{row.cpf}</TableCell>
+                  <TableCell align="left">{row.mcc}</TableCell>
+                  <TableCell align="left">{row.contactEmail}</TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={tableRows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={(_, page) => handleChangePage(page)}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-    </PessoaFisicaProspectsTableContainer>
+              );
+            })}
+            {emptyRows > 0 && (
+              <TableRow
+                style={{
+                  height: 53 * emptyRows,
+                }}
+              >
+                <TableCell colSpan={5} align="left" />
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={tableRows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(_, page) => handleChangePage(page)}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Paper>
   );
 };
