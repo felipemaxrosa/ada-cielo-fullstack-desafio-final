@@ -35,8 +35,12 @@ export const PessoaFisicaProspectForm = () => {
     const name = event.target.name as PessoaFisicaProspectKeys;
     const regex = /^[0-9\b]+$/;
 
-    if (onlyNumbers && (value === '' || regex.test(value))) {
-      dispatch(onChangePessoaFisicaProspect({ name, value }));
+    if (onlyNumbers) {
+      if (value === '' || regex.test(value)) {
+        dispatch(onChangePessoaFisicaProspect({ name, value }));
+      } else {
+        event.stopPropagation();
+      }
     } else {
       dispatch(onChangePessoaFisicaProspect({ name, value }));
     }
@@ -67,7 +71,7 @@ export const PessoaFisicaProspectForm = () => {
                 size="small"
                 label="ID"
                 name="id"
-                value={state?.id}
+                value={state?.id ? state.id : ''}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -82,7 +86,6 @@ export const PessoaFisicaProspectForm = () => {
                 label="CPF"
                 value={state?.cpf}
                 onChange={(e) => handleInputChange(e, true)}
-                // inputProps={{ maxLength: 11 }}
               />
             </Grid>
             <Grid item xs={6} sm={3}>
@@ -94,7 +97,6 @@ export const PessoaFisicaProspectForm = () => {
                 onChange={(e) => handleInputChange(e, true)}
                 error={Boolean(errors?.mcc)}
                 helperText={errors?.mcc}
-                // inputProps={{ maxLength: 4 }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>

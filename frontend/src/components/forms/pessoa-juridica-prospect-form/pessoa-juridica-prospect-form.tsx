@@ -27,8 +27,6 @@ export const PessoaJuridicaProspectForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  console.log({ state });
-
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     onlyNumbers?: boolean
@@ -36,8 +34,6 @@ export const PessoaJuridicaProspectForm = () => {
     const { value } = event.target;
     const name = event.target.name as PessoaJuridicaProspectKeys;
     const regex = /^[0-9\b]+$/;
-
-    console.log({ name, value });
 
     if (onlyNumbers) {
       if (value === '' || regex.test(value)) {
@@ -112,7 +108,6 @@ export const PessoaJuridicaProspectForm = () => {
                 onChange={(e) => handleInputChange(e, true)}
                 error={Boolean(errors?.mcc)}
                 helperText={errors?.mcc}
-                // inputProps={{ maxLength: 4 }}
               />
             </Grid>
             <Grid item xs={6} sm={3}>
@@ -121,7 +116,7 @@ export const PessoaJuridicaProspectForm = () => {
                 size="small"
                 label="CPF do contato"
                 value={state?.contactCpf}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, true)}
                 error={Boolean(errors?.contactCpf)}
                 helperText={errors?.contactCpf}
               />
