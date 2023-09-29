@@ -3,7 +3,6 @@ import { createReducer } from '@reduxjs/toolkit';
 import {
   PessoaFisicaProspect,
   PessoaFisicaProspectErrors,
-  PessoaFisicaProspectKeys,
   PessoaJuridicaProspect,
   PessoaJuridicaProspectErrors,
   ProspectType,
