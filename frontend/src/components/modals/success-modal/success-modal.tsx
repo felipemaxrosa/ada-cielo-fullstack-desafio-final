@@ -7,13 +7,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { APP_ROUTES } from '../../../../constants';
-import { useAppDispatch, useAppSelector } from '../../../../store';
+import { APP_ROUTES } from '../../../constants';
+import { useAppDispatch, useAppSelector } from '../../../store';
 import {
   bootstrap,
   showSuccessModal,
-} from '../../../../store/actions/prospect-actions';
-import { selectShowSuccessModal } from '../../../../store/selectors';
+} from '../../../store/actions/prospect-actions';
+import { selectShowSuccessModal } from '../../../store/selectors';
 
 interface SuccessModalProps {
   title?: string;

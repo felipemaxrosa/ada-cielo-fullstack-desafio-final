@@ -9,14 +9,35 @@ function getAllProspects() {
 }
 
 function addProspect(prospect: PessoaFisicaProspect) {
-  return api.post(SERVICES_URL.PROSPECT_PESSOA_FISICA.BASE_URL, prospect);
+  return api.post<PessoaFisicaProspect>(
+    SERVICES_URL.PROSPECT_PESSOA_FISICA.BASE_URL,
+    prospect
+  );
 }
 
 function updateProspect(prospect: PessoaFisicaProspect) {
-  return api.put(
+  return api.put<PessoaFisicaProspect>(
     `${SERVICES_URL.PROSPECT_PESSOA_FISICA.BASE_URL}/${prospect.id}`,
     prospect
   );
 }
 
-export { getAllProspects, updateProspect, addProspect };
+function getNextProspect() {
+  return api.get<PessoaFisicaProspect | string>(
+    SERVICES_URL.PROSPECT_PESSOA_FISICA.NEXT_PROSPECT
+  );
+}
+
+function deleteProspect(prospect: PessoaFisicaProspect) {
+  return api.delete<PessoaFisicaProspect>(
+    `${SERVICES_URL.PROSPECT_PESSOA_FISICA.BASE_URL}/${prospect.id}`
+  );
+}
+
+export {
+  getAllProspects,
+  updateProspect,
+  addProspect,
+  getNextProspect,
+  deleteProspect,
+};
