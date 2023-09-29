@@ -18,6 +18,9 @@ import { AxiosError } from 'axios';
 const BOOTSTRAP = 'PROSPECT/BOOTSTRAP';
 const SET_PROSPECT_TYPE = 'PROSPECT/SET_PROSPECT_TYPE';
 const SHOW_SUCCESS_MODAL = 'PROSPECT/SHOW_SUCCESS_MODAL';
+const SHOW_ALERT_MODAL = 'PROSPECT/SHOW_ALERT_MODAL';
+const CLEAR_ALERT = 'PROSPECT/CLEAR_ALERT';
+const SET_ALERT_MESSAGE = 'PROSPECT/SET_ALERT_MESSAGE';
 
 const SET_PESSOA_FISICA_PROSPECT = 'PROSPECT/SET_PESSOA_FISICA_PROSPECT';
 const SET_PESSOA_FISICA_PROSPECT_ERRORS =
@@ -28,6 +31,7 @@ const CLEAR_PESSOA_FISICA_PROSPECT_ERRORS =
 const ON_CHANGE_PESSOA_FISICA_PROSPECT =
   'PROSPECT/ON_CHANGE_PESSOA_FISICA_PROSPECT';
 const SAVE_PESSOA_FISICA_PROSPECT = 'PROSPECT/SAVE_PESSOA_FISICA_PROSPECT';
+const NEXT_PESSOA_FISICA_PROSPECT = 'PROSPECT/NEXT_PESSOA_FISICA_PROSPECT';
 
 const SET_PESSOA_JURIDICA_PROSPECT = 'PROSPECT/SET_PESSOA_JURIDICA_PROSPECT';
 const SET_PESSOA_JURIDICA_PROSPECT_ERRORS =
@@ -60,6 +64,9 @@ export const bootstrap = createAsyncThunk<{
 });
 export const setProspectType = createAction<ProspectType>(SET_PROSPECT_TYPE);
 export const showSuccessModal = createAction<boolean>(SHOW_SUCCESS_MODAL);
+export const showAlertModal = createAction<boolean>(SHOW_ALERT_MODAL);
+export const clearAlert = createAction(CLEAR_ALERT);
+export const setAlertMessage = createAction<string>(SET_ALERT_MESSAGE);
 
 /**
  * PESSOA FISICA PROSPECT
@@ -108,6 +115,22 @@ export const savePessoaFisicaProspect = createAsyncThunk<
     }
   }
 );
+export const nextPessoaFisicaProspect = createAsyncThunk<
+  PessoaFisicaProspect | string
+>(NEXT_PESSOA_FISICA_PROSPECT, async () => {
+  try {
+    const { data } = await pessoaFisicaProspectService.getNextProspect();
+    if (typeof data === 'object') {
+      return data;
+    }
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    const handledError = (error as AxiosError)?.response?.data as string;
+    return Promise.reject(handledError);
+  }
+});
 
 /**
  * PESSOA JURIDICA PROSPECT

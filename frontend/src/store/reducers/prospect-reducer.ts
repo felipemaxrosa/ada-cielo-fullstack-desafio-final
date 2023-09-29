@@ -10,6 +10,7 @@ import {
 import { prospectActions } from '../actions';
 
 export interface ProspectReducerState {
+  alertMessage: string;
   fisica: {
     data?: PessoaFisicaProspect;
     errors: PessoaFisicaProspectErrors | null;
@@ -23,6 +24,7 @@ export interface ProspectReducerState {
     fisica: PessoaFisicaProspect[];
     juridica: PessoaJuridicaProspect[];
   };
+  showAlertModal: boolean;
   showSuccessModal: boolean;
   submitting: boolean;
   type: ProspectType;
@@ -47,6 +49,7 @@ const pessoaJuridicaInitialState: PessoaJuridicaProspect = {
 };
 
 export const prospectReducerInitialState: ProspectReducerState = {
+  alertMessage: '',
   loading: false,
   prospects: {
     fisica: [],
@@ -62,6 +65,7 @@ export const prospectReducerInitialState: ProspectReducerState = {
   },
   type: 'FISICA',
   submitting: false,
+  showAlertModal: false,
   showSuccessModal: false,
 };
 
@@ -98,6 +102,19 @@ export const prospectReducer = createReducer(
         showSuccessModal: payload,
       })
     );
+
+    designer.addCase(prospectActions.clearAlert, (state) => {
+      state.alertMessage = '';
+      state.showAlertModal = false;
+    });
+
+    designer.addCase(prospectActions.setAlertMessage, (state, { payload }) => {
+      state.alertMessage = payload;
+    });
+
+    designer.addCase(prospectActions.showAlertModal, (state, { payload }) => {
+      state.showAlertModal = payload;
+    });
 
     /**
      * PESSOA FISICA PROSPECT
@@ -162,6 +179,7 @@ export const prospectReducer = createReducer(
         submitting: false,
         showSuccessModal: true,
         fisica: {
+          ...state.fisica,
           errors: null,
         },
       }))
@@ -176,6 +194,34 @@ export const prospectReducer = createReducer(
             state.fisica.errors = errors;
             state.submitting = false;
           }
+        }
+      );
+
+    designer
+      .addCase(prospectActions.nextPessoaFisicaProspect.pending, (state) => ({
+        ...state,
+        loading: true,
+      }))
+      .addCase(
+        prospectActions.nextPessoaFisicaProspect.fulfilled,
+        (state, { payload }) => {
+          if (typeof payload === 'object') {
+            state.fisica.data = payload as PessoaFisicaProspect;
+          } else {
+            state.alertMessage = payload;
+            state.showAlertModal = true;
+          }
+          state.loading = false;
+        }
+      )
+      .addCase(
+        prospectActions.nextPessoaFisicaProspect.rejected,
+        (state, { error }) => {
+          if (error.message) {
+            state.alertMessage = error.message;
+            state.showAlertModal = true;
+          }
+          state.loading = false;
         }
       );
 

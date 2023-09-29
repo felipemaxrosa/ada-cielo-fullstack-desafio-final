@@ -5,6 +5,11 @@ export const selectIsSubmitting = (state: RootState) =>
   state.prospect.submitting;
 export const selectShowSuccessModal = (state: RootState) =>
   state.prospect.showSuccessModal;
+export const selectIsLoading = (state: RootState) => state.prospect.loading;
+export const selectAlertMessage = (state: RootState) =>
+  state.prospect.alertMessage;
+export const selectShowAlertModal = (state: RootState) =>
+  state.prospect.showAlertModal;
 
 export const selectPessoaFisicaProspect = (state: RootState) =>
   state.prospect.fisica.data;
