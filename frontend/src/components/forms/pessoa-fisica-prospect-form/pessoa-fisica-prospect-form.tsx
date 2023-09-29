@@ -27,13 +27,19 @@ export const PessoaFisicaProspectForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    onlyNumbers = false
+  ) => {
     const { value } = event.target;
     const name = event.target.name as PessoaFisicaProspectKeys;
+    const regex = /^[0-9\b]+$/;
 
-    console.log({ value, name });
-
-    dispatch(onChangePessoaFisicaProspect({ name, value }));
+    if (onlyNumbers && (value === '' || regex.test(value))) {
+      dispatch(onChangePessoaFisicaProspect({ name, value }));
+    } else {
+      dispatch(onChangePessoaFisicaProspect({ name, value }));
+    }
   };
 
   const handleCancelButtonClick = () => {
@@ -75,7 +81,8 @@ export const PessoaFisicaProspectForm = () => {
                 size="small"
                 label="CPF"
                 value={state?.cpf}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, true)}
+                // inputProps={{ maxLength: 11 }}
               />
             </Grid>
             <Grid item xs={6} sm={3}>
@@ -84,9 +91,10 @@ export const PessoaFisicaProspectForm = () => {
                 size="small"
                 label="MCC"
                 value={state?.mcc}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, true)}
                 error={Boolean(errors?.mcc)}
                 helperText={errors?.mcc}
+                // inputProps={{ maxLength: 4 }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>

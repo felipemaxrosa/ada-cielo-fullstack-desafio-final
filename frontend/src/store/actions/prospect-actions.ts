@@ -87,7 +87,6 @@ export const savePessoaFisicaProspect = createAsyncThunk<
     if (values.id) {
       try {
         await pessoaFisicaProspectService.updateProspect(values);
-        window.location.href = '/';
       } catch (error) {
         const handledErrors = (error as AxiosError)?.response
           ?.data as PessoaFisicaProspectErrors;

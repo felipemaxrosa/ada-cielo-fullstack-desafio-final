@@ -156,6 +156,7 @@ export const prospectReducer = createReducer(
             ) as PessoaFisicaProspectErrors;
 
             state.fisica.errors = errors;
+            state.submitting = false;
           }
         }
       );

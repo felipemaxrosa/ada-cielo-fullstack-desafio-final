@@ -34,7 +34,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ title }) => {
       <DialogTitle>{title}</DialogTitle>
       <DialogContent sx={{ padding: '32px 24px' }}>
         <DialogContentText>
-          New Prospect has been created successfully!
+          Prospect has been processed successfully!
         </DialogContentText>
       </DialogContent>
       <DialogActions sx={{ padding: 2 }}>
