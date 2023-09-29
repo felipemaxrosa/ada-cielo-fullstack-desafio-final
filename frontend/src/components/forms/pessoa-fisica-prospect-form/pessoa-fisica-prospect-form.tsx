@@ -1,15 +1,24 @@
 import React from 'react';
 import { Container, Grid, Paper } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import { Input } from '../../form/input';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { selectPessoaFisicaProspect } from '../../../store/selectors';
 import { PessoaFisicaProspectKeys } from '../../../models/interfaces';
-import { onChangePessoaFisicaProspect } from '../../../store/actions/prospect-actions';
+import {
+  clearPessoaFisicaProspect,
+  clearPessoaFisicaProspectErrors,
+  onChangePessoaFisicaProspect,
+  savePessoaFisicaProspect,
+} from '../../../store/actions/prospect-actions';
+import { Button } from '../../form/button';
+import { APP_ROUTES } from '../../../constants';
 
 export const PessoaFisicaProspectForm = () => {
   const state = useAppSelector(selectPessoaFisicaProspect);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const isEditing = true;
 
@@ -17,7 +26,21 @@ export const PessoaFisicaProspectForm = () => {
     const { value } = event.target;
     const name = event.target.name as PessoaFisicaProspectKeys;
 
+    console.log({ value, name });
+
     dispatch(onChangePessoaFisicaProspect({ name, value }));
+  };
+
+  const handleCancelButtonClick = () => {
+    dispatch(clearPessoaFisicaProspect());
+    dispatch(clearPessoaFisicaProspectErrors());
+    navigate(APP_ROUTES.HOME);
+  };
+
+  const handleSaveButtonClick = () => {
+    if (state) {
+      dispatch(savePessoaFisicaProspect(state));
+    }
   };
 
   return (
@@ -37,7 +60,7 @@ export const PessoaFisicaProspectForm = () => {
               />
             </Grid>
           </Grid>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} mb={4}>
             <Grid item xs={6} sm={3}>
               <Input
                 name="cpf"
@@ -73,6 +96,23 @@ export const PessoaFisicaProspectForm = () => {
                 value={state?.contactEmail}
                 onChange={handleInputChange}
               />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Button fullWidth onClick={handleCancelButtonClick}>
+                Cancelar
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                variant="contained"
+                fullWidth
+                onClick={handleSaveButtonClick}
+              >
+                Salvar
+              </Button>
             </Grid>
           </Grid>
         </form>

@@ -3,6 +3,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import {
   PessoaFisicaProspect,
   PessoaFisicaProspectErrors,
+  PessoaFisicaProspectKeys,
   PessoaJuridicaProspect,
   PessoaJuridicaProspectErrors,
   ProspectType,
@@ -18,7 +19,7 @@ export interface ProspectReducerState {
   };
   type: ProspectType;
   fisica: {
-    data: PessoaFisicaProspect | null;
+    data?: PessoaFisicaProspect;
     errors: PessoaFisicaProspectErrors | null;
   };
   juridica: {
@@ -34,7 +35,7 @@ export const prospectReducerInitialState: ProspectReducerState = {
     juridica: [],
   },
   fisica: {
-    data: null,
+    data: undefined,
     errors: null,
   },
   juridica: {
@@ -78,7 +79,7 @@ export const prospectReducer = createReducer(
       ...state,
       fisica: {
         ...state.fisica,
-        data: null,
+        data: undefined,
       },
     }));
 
@@ -117,14 +118,34 @@ export const prospectReducer = createReducer(
 
     designer.addCase(
       prospectActions.onChangePessoaFisicaProspect,
-      (state, { payload }) => ({
-        ...state,
-        fisica: {
-          ...state.fisica,
-          [payload.name]: payload.value,
-        },
-      })
+      (state, { payload }) => {
+        const newData = { ...state.fisica.data, [payload.name]: payload.value };
+
+        state.fisica.data = newData as PessoaFisicaProspect;
+      }
     );
+
+    designer
+      .addCase(prospectActions.savePessoaFisicaProspect.pending, (state) => ({
+        ...state,
+        submitting: true,
+      }))
+      .addCase(prospectActions.savePessoaFisicaProspect.fulfilled, (state) => ({
+        ...state,
+        submitting: false,
+      }))
+      .addCase(
+        prospectActions.savePessoaFisicaProspect.rejected,
+        (state, { error }) => {
+          if (error.message) {
+            const errors = JSON.parse(
+              error?.message
+            ) as PessoaFisicaProspectErrors;
+
+            state.fisica.errors = errors;
+          }
+        }
+      );
 
     /**
      * PESSOA JURIDICA PROSPECT
