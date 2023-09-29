@@ -3,7 +3,7 @@ import { Container } from '@mui/material';
 
 import { Routes } from '../../routes';
 import { Toolbar } from '../toolbar/toolbar';
-import { SuccessModal } from '../form/modals/success-modal/success-modal';
+import { SuccessModal, AlertModal } from '../modals';
 
 export function App() {
   return (
@@ -15,6 +15,7 @@ export function App() {
         </main>
 
         <SuccessModal />
+        <AlertModal />
       </Container>
     </Router>
   );
