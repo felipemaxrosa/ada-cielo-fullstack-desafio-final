@@ -28,6 +28,24 @@ export interface ProspectReducerState {
   type: ProspectType;
 }
 
+const pessoaFisicaInitialState: PessoaFisicaProspect = {
+  contactEmail: '',
+  contactName: '',
+  cpf: '',
+  mcc: '',
+  id: 0,
+};
+
+const pessoaJuridicaInitialState: PessoaJuridicaProspect = {
+  contactEmail: '',
+  contactName: '',
+  contactCpf: '',
+  corporateName: '',
+  cnpj: '',
+  mcc: '',
+  id: 0,
+};
+
 export const prospectReducerInitialState: ProspectReducerState = {
   loading: false,
   prospects: {
@@ -35,11 +53,11 @@ export const prospectReducerInitialState: ProspectReducerState = {
     juridica: [],
   },
   fisica: {
-    data: undefined,
+    data: pessoaFisicaInitialState,
     errors: null,
   },
   juridica: {
-    data: null,
+    data: pessoaJuridicaInitialState,
     errors: null,
   },
   type: 'FISICA',
@@ -88,7 +106,7 @@ export const prospectReducer = createReducer(
       ...state,
       fisica: {
         ...state.fisica,
-        data: undefined,
+        data: pessoaFisicaInitialState,
       },
     }));
 
@@ -168,7 +186,7 @@ export const prospectReducer = createReducer(
       ...state,
       juridica: {
         ...state.juridica,
-        data: null,
+        data: pessoaJuridicaInitialState,
       },
     }));
 
@@ -204,5 +222,48 @@ export const prospectReducer = createReducer(
         },
       })
     );
+
+    designer.addCase(
+      prospectActions.onChangePessoaJuridicaProspect,
+      (state, { payload }) => {
+        const newData = {
+          ...state.juridica.data,
+          [payload.name]: payload.value,
+        };
+
+        state.juridica.data = newData as PessoaJuridicaProspect;
+      }
+    );
+
+    designer
+      .addCase(prospectActions.savePessoaJuridicaProspect.pending, (state) => ({
+        ...state,
+        submitting: true,
+      }))
+      .addCase(
+        prospectActions.savePessoaJuridicaProspect.fulfilled,
+        (state) => ({
+          ...state,
+          submitting: false,
+          showSuccessModal: true,
+          juridica: {
+            ...state.juridica,
+            errors: null,
+          },
+        })
+      )
+      .addCase(
+        prospectActions.savePessoaJuridicaProspect.rejected,
+        (state, { error }) => {
+          if (error.message) {
+            const errors = JSON.parse(
+              error?.message
+            ) as PessoaJuridicaProspectErrors;
+
+            state.juridica.errors = errors;
+            state.submitting = false;
+          }
+        }
+      );
   }
 );

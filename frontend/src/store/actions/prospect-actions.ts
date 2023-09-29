@@ -9,6 +9,8 @@ import {
   PessoaFisicaProspectErrors,
   PessoaFisicaProspectKeys,
   PessoaJuridicaProspect,
+  PessoaJuridicaProspectErrors,
+  PessoaJuridicaProspectKeys,
   ProspectType,
 } from '../../models/interfaces';
 import { AxiosError } from 'axios';
@@ -36,6 +38,7 @@ const CLEAR_PESSOA_JURIDICA_PROSPECT_ERRORS =
   'PROSPECT/CLEAR_PESSOA_JURIDICA_PROSPECT_ERRORS';
 const ON_CHANGE_PESSOA_JURIDICA_PROSPECT =
   'PROSPECT/ON_CHANGE_PESSOA_JURIDICA_PROSPECT';
+const SAVE_PESSOA_JURIDICA_PROSPECT = 'PROSPECT/SAVE_PESSOA_JURIDICA_PROSPECT';
 
 /**
  * GENERAL ACTIONS
@@ -113,10 +116,48 @@ export const setPessoaJuridicaProspect = createAction<PessoaJuridicaProspect>(
   SET_PESSOA_JURIDICA_PROSPECT
 );
 export const setPessoaJuridicaProspectErrors =
-  createAction<PessoaFisicaProspectErrors>(SET_PESSOA_JURIDICA_PROSPECT_ERRORS);
+  createAction<PessoaJuridicaProspectErrors>(
+    SET_PESSOA_JURIDICA_PROSPECT_ERRORS
+  );
 export const clearPessoaJuridicaProspect = createAction(
   CLEAR_PESSOA_JURIDICA_PROSPECT
 );
 export const clearPessoaJuridicaProspectErrors = createAction(
   CLEAR_PESSOA_JURIDICA_PROSPECT_ERRORS
 );
+export const savePessoaJuridicaProspect = createAsyncThunk<
+  { errors: PessoaJuridicaProspectErrors } | void,
+  PessoaJuridicaProspect
+>(
+  SAVE_PESSOA_JURIDICA_PROSPECT,
+  async (values): Promise<{ errors: PessoaJuridicaProspectErrors } | void> => {
+    if (values.id) {
+      try {
+        await pessoaJuridicaProspectService.updateProspect(values);
+      } catch (error) {
+        const handledErrors = (error as AxiosError)?.response
+          ?.data as PessoaJuridicaProspectErrors;
+
+        return Promise.reject(JSON.stringify(handledErrors));
+      }
+    } else {
+      try {
+        await pessoaJuridicaProspectService.addProspect(values);
+      } catch (error) {
+        const handledErrors = (error as AxiosError)?.response
+          ?.data as PessoaJuridicaProspectErrors;
+
+        return Promise.reject(JSON.stringify(handledErrors));
+      }
+    }
+  }
+);
+
+type OnChangePessoaJuridicaProspect = {
+  name: PessoaJuridicaProspectKeys;
+  value: string;
+};
+export const onChangePessoaJuridicaProspect =
+  createAction<OnChangePessoaJuridicaProspect>(
+    ON_CHANGE_PESSOA_JURIDICA_PROSPECT
+  );
