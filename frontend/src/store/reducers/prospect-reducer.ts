@@ -3,7 +3,6 @@ import { createReducer } from '@reduxjs/toolkit';
 import {
   PessoaFisicaProspect,
   PessoaFisicaProspectErrors,
-  PessoaFisicaProspectKeys,
   PessoaJuridicaProspect,
   PessoaJuridicaProspectErrors,
   ProspectType,
@@ -11,13 +10,6 @@ import {
 import { prospectActions } from '../actions';
 
 export interface ProspectReducerState {
-  loading: boolean;
-  submitting: boolean;
-  prospects: {
-    fisica: PessoaFisicaProspect[];
-    juridica: PessoaJuridicaProspect[];
-  };
-  type: ProspectType;
   fisica: {
     data?: PessoaFisicaProspect;
     errors: PessoaFisicaProspectErrors | null;
@@ -26,6 +18,14 @@ export interface ProspectReducerState {
     data: PessoaJuridicaProspect | null;
     errors: PessoaJuridicaProspectErrors | null;
   };
+  loading: boolean;
+  prospects: {
+    fisica: PessoaFisicaProspect[];
+    juridica: PessoaJuridicaProspect[];
+  };
+  showSuccessModal: boolean;
+  submitting: boolean;
+  type: ProspectType;
 }
 
 export const prospectReducerInitialState: ProspectReducerState = {
@@ -44,6 +44,7 @@ export const prospectReducerInitialState: ProspectReducerState = {
   },
   type: 'FISICA',
   submitting: false,
+  showSuccessModal: false,
 };
 
 export const prospectReducer = createReducer(
@@ -71,6 +72,14 @@ export const prospectReducer = createReducer(
       ...state,
       type: payload,
     }));
+
+    designer.addCase(
+      prospectActions.showSuccessModal,
+      (state, { payload }) => ({
+        ...state,
+        showSuccessModal: payload,
+      })
+    );
 
     /**
      * PESSOA FISICA PROSPECT
@@ -133,6 +142,10 @@ export const prospectReducer = createReducer(
       .addCase(prospectActions.savePessoaFisicaProspect.fulfilled, (state) => ({
         ...state,
         submitting: false,
+        showSuccessModal: true,
+        fisica: {
+          errors: null,
+        },
       }))
       .addCase(
         prospectActions.savePessoaFisicaProspect.rejected,
@@ -143,6 +156,7 @@ export const prospectReducer = createReducer(
             ) as PessoaFisicaProspectErrors;
 
             state.fisica.errors = errors;
+            state.submitting = false;
           }
         }
       );

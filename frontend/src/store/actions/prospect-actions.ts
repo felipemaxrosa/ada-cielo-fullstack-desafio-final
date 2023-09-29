@@ -15,6 +15,7 @@ import { AxiosError } from 'axios';
 
 const BOOTSTRAP = 'PROSPECT/BOOTSTRAP';
 const SET_PROSPECT_TYPE = 'PROSPECT/SET_PROSPECT_TYPE';
+const SHOW_SUCCESS_MODAL = 'PROSPECT/SHOW_SUCCESS_MODAL';
 
 const SET_PESSOA_FISICA_PROSPECT = 'PROSPECT/SET_PESSOA_FISICA_PROSPECT';
 const SET_PESSOA_FISICA_PROSPECT_ERRORS =
@@ -55,6 +56,7 @@ export const bootstrap = createAsyncThunk<{
   };
 });
 export const setProspectType = createAction<ProspectType>(SET_PROSPECT_TYPE);
+export const showSuccessModal = createAction<boolean>(SHOW_SUCCESS_MODAL);
 
 /**
  * PESSOA FISICA PROSPECT
