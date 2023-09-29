@@ -115,7 +115,7 @@ public class PessoaJuridicaController {
       return ResponseEntity.status(HttpStatus.OK).body(nextProspect);
     }
 
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The prospect pessoa juridica service queue is empty!");
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The prospect service queue is empty!");
   }
 
 

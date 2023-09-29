@@ -197,34 +197,6 @@ export const prospectReducer = createReducer(
         }
       );
 
-    designer
-      .addCase(prospectActions.nextPessoaFisicaProspect.pending, (state) => ({
-        ...state,
-        loading: true,
-      }))
-      .addCase(
-        prospectActions.nextPessoaFisicaProspect.fulfilled,
-        (state, { payload }) => {
-          if (typeof payload === 'object') {
-            state.fisica.data = payload as PessoaFisicaProspect;
-          } else {
-            state.alertMessage = payload;
-            state.showAlertModal = true;
-          }
-          state.loading = false;
-        }
-      )
-      .addCase(
-        prospectActions.nextPessoaFisicaProspect.rejected,
-        (state, { error }) => {
-          if (error.message) {
-            state.alertMessage = error.message;
-            state.showAlertModal = true;
-          }
-          state.loading = false;
-        }
-      );
-
     /**
      * PESSOA JURIDICA PROSPECT
      */

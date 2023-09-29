@@ -11,7 +11,7 @@ import {
   selectAlertMessage,
 } from '../../../store/selectors';
 import { useAppDispatch, useAppSelector } from '../../../store';
-import { clearAlert } from '../../../store/actions/prospect-actions';
+import { showAlertModal } from '../../../store/actions/prospect-actions';
 
 interface AlertModalProps {
   title?: string;
@@ -22,11 +22,11 @@ export const AlertModal: React.FC<AlertModalProps> = ({ title }) => {
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
-    dispatch(clearAlert());
+    dispatch(showAlertModal(false));
   };
 
   return (
-    <Dialog id="success-modal" open={open} maxWidth="md">
+    <Dialog id="success-modal" open={open} maxWidth="md" onClose={handleClose}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent sx={{ padding: '32px 24px' }}>
         <DialogContentText>{message}</DialogContentText>

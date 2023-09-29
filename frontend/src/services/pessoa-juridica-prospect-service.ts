@@ -19,4 +19,22 @@ function updateProspect(prospect: PessoaJuridicaProspect) {
   );
 }
 
-export { getAllProspects, addProspect, updateProspect };
+function getNextProspect() {
+  return api.get<PessoaJuridicaProspect | string>(
+    SERVICES_URL.PROSPECT_PESSOA_JURIDICA.NEXT_PROSPECT
+  );
+}
+
+function deleteProspect(prospect: PessoaJuridicaProspect) {
+  return api.delete<PessoaJuridicaProspect>(
+    `${SERVICES_URL.PROSPECT_PESSOA_JURIDICA.BASE_URL}/${prospect.id}`
+  );
+}
+
+export {
+  getAllProspects,
+  addProspect,
+  updateProspect,
+  getNextProspect,
+  deleteProspect,
+};
