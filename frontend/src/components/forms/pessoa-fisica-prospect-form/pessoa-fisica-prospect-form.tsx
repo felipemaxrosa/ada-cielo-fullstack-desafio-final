@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Input } from '../../form/input';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import {
+  selectIsSubmitting,
   selectPessoaFisicaProspect,
   selectPessoaFisicaProspectErrors,
 } from '../../../store/selectors';
@@ -21,10 +22,10 @@ import { APP_ROUTES } from '../../../constants';
 export const PessoaFisicaProspectForm = () => {
   const state = useAppSelector(selectPessoaFisicaProspect);
   const errors = useAppSelector(selectPessoaFisicaProspectErrors);
+  const isSubmitting = useAppSelector(selectIsSubmitting);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const isEditing = true;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -52,11 +53,12 @@ export const PessoaFisicaProspectForm = () => {
       <Container sx={{ padding: '32px 16px' }}>
         <h1>Pessoa Fisica</h1>
         <form>
-          <Grid container mb={2}>
+          <Grid container mb={2} spacing={2}>
             <Grid item xs={6} sm={2}>
               <Input
+                sx={{ background: '#F4F4F4' }}
+                disabled
                 size="small"
-                disabled={isEditing}
                 label="ID"
                 name="id"
                 value={state?.id}
@@ -111,19 +113,24 @@ export const PessoaFisicaProspectForm = () => {
             </Grid>
           </Grid>
 
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Button fullWidth onClick={handleCancelButtonClick}>
-                Cancelar
-              </Button>
-            </Grid>
-            <Grid item xs={6}>
+          <Grid container spacing={2} direction="row-reverse">
+            <Grid item xs={6} md={2}>
               <Button
                 variant="contained"
                 fullWidth
                 onClick={handleSaveButtonClick}
+                disabled={isSubmitting}
               >
                 Salvar
+              </Button>
+            </Grid>
+            <Grid item xs={6} md={2}>
+              <Button
+                fullWidth
+                onClick={handleCancelButtonClick}
+                disabled={isSubmitting}
+              >
+                Cancelar
               </Button>
             </Grid>
           </Grid>

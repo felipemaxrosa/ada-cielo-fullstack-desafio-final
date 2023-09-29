@@ -1,6 +1,10 @@
 import { RootState } from '..';
 
 export const selectProspectType = (state: RootState) => state.prospect.type;
+export const selectIsSubmitting = (state: RootState) =>
+  state.prospect.submitting;
+export const selectShowSuccessModal = (state: RootState) =>
+  state.prospect.showSuccessModal;
 
 export const selectPessoaFisicaProspect = (state: RootState) =>
   state.prospect.fisica.data;
