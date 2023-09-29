@@ -31,7 +31,6 @@ const CLEAR_PESSOA_FISICA_PROSPECT_ERRORS =
 const ON_CHANGE_PESSOA_FISICA_PROSPECT =
   'PROSPECT/ON_CHANGE_PESSOA_FISICA_PROSPECT';
 const SAVE_PESSOA_FISICA_PROSPECT = 'PROSPECT/SAVE_PESSOA_FISICA_PROSPECT';
-const NEXT_PESSOA_FISICA_PROSPECT = 'PROSPECT/NEXT_PESSOA_FISICA_PROSPECT';
 
 const SET_PESSOA_JURIDICA_PROSPECT = 'PROSPECT/SET_PESSOA_JURIDICA_PROSPECT';
 const SET_PESSOA_JURIDICA_PROSPECT_ERRORS =
@@ -115,22 +114,6 @@ export const savePessoaFisicaProspect = createAsyncThunk<
     }
   }
 );
-export const nextPessoaFisicaProspect = createAsyncThunk<
-  PessoaFisicaProspect | string
->(NEXT_PESSOA_FISICA_PROSPECT, async () => {
-  try {
-    const { data } = await pessoaFisicaProspectService.getNextProspect();
-    if (typeof data === 'object') {
-      return data;
-    }
-    console.log(data);
-
-    return data;
-  } catch (error) {
-    const handledError = (error as AxiosError)?.response?.data as string;
-    return Promise.reject(handledError);
-  }
-});
 
 /**
  * PESSOA JURIDICA PROSPECT

@@ -1,16 +1,16 @@
 import { Toolbar, Typography, Button, Grid } from '@mui/material';
 import { SxProps, Theme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
+
 import { APP_ROUTES } from '../../../constants';
 import { useAppDispatch } from '../../../store';
 import {
-  nextPessoaFisicaProspect,
   setAlertMessage,
   setPessoaFisicaProspect,
   showAlertModal,
 } from '../../../store/actions/prospect-actions';
 import { pessoaFisicaProspectService } from '../../../services';
-import { AxiosError } from 'axios';
 
 export function PessoaFisicaProspectsTableToolbar() {
   const navigate = useNavigate();
