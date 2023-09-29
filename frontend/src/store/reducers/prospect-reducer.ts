@@ -132,6 +132,9 @@ export const prospectReducer = createReducer(
       .addCase(prospectActions.savePessoaFisicaProspect.fulfilled, (state) => ({
         ...state,
         submitting: false,
+        fisica: {
+          errors: null,
+        },
       }))
       .addCase(
         prospectActions.savePessoaFisicaProspect.rejected,

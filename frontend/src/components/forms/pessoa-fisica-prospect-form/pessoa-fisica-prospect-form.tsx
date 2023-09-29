@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { Input } from '../../form/input';
 import { useAppDispatch, useAppSelector } from '../../../store';
-import { selectPessoaFisicaProspect } from '../../../store/selectors';
+import {
+  selectPessoaFisicaProspect,
+  selectPessoaFisicaProspectErrors,
+} from '../../../store/selectors';
 import { PessoaFisicaProspectKeys } from '../../../models/interfaces';
 import {
   clearPessoaFisicaProspect,
@@ -17,6 +20,7 @@ import { APP_ROUTES } from '../../../constants';
 
 export const PessoaFisicaProspectForm = () => {
   const state = useAppSelector(selectPessoaFisicaProspect);
+  const errors = useAppSelector(selectPessoaFisicaProspectErrors);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -63,6 +67,8 @@ export const PessoaFisicaProspectForm = () => {
           <Grid container spacing={2} mb={4}>
             <Grid item xs={6} sm={3}>
               <Input
+                error={!!errors?.cpf}
+                helperText={errors?.cpf}
                 name="cpf"
                 size="small"
                 label="CPF"
@@ -77,6 +83,8 @@ export const PessoaFisicaProspectForm = () => {
                 label="MCC"
                 value={state?.mcc}
                 onChange={handleInputChange}
+                error={Boolean(errors?.mcc)}
+                helperText={errors?.mcc}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -86,6 +94,8 @@ export const PessoaFisicaProspectForm = () => {
                 label="Nome do contato"
                 value={state?.contactName}
                 onChange={handleInputChange}
+                error={Boolean(errors?.contactName)}
+                helperText={errors?.contactName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -95,6 +105,8 @@ export const PessoaFisicaProspectForm = () => {
                 label="Email do contato"
                 value={state?.contactEmail}
                 onChange={handleInputChange}
+                error={Boolean(errors?.contactEmail)}
+                helperText={errors?.contactEmail}
               />
             </Grid>
           </Grid>
