@@ -107,7 +107,7 @@ public class PessoaFisicaController {
       return ResponseEntity.status(HttpStatus.OK).body(nextProspect);
     }
 
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The prospect pessoa fisica service queue is empty!");
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The prospect service queue is empty!");
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
