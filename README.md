@@ -21,7 +21,7 @@ Este projeto foi feito com base no desafio proposto pelo Bootcamp da Ada Cielo d
 
 ## Boas Praticas
 
-Em ambos os projetos foram desenvolvidos aplicando a arquitetura clean code.
+Ambos os projetos foram desenvolvidos aplicando a arquitetura clean code.
 
 ## Como Executar
 
