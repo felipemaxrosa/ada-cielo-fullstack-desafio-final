@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { APP_ROUTES } from '../../constants';
 
-const pages = ['Prospects', 'Pessoa Fisica', 'Pessoa Juridica'];
+const pages = ['Pessoa Juridica'];
 
 export function Toolbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -30,8 +30,6 @@ export function Toolbar() {
 
   const handleMenuClick = (menu: string) => {
     const routes: Record<string, APP_ROUTES> = {
-      Prospects: APP_ROUTES.HOME,
-      'Pessoa Fisica': APP_ROUTES.PESSOA_FISICA,
       'Pessoa Juridica': APP_ROUTES.PESSOA_JURIDICA,
     };
 
@@ -47,7 +45,7 @@ export function Toolbar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <MuiToolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -63,10 +61,10 @@ export function Toolbar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            CIELO PROSPECTS
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -101,8 +99,7 @@ export function Toolbar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          </Box> */}
           <Typography
             variant="h5"
             noWrap
@@ -119,7 +116,7 @@ export function Toolbar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            CIELO PROSPECTS
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -133,12 +130,8 @@ export function Toolbar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+          <Box>
+            <Avatar>C</Avatar>
           </Box>
         </MuiToolbar>
       </Container>

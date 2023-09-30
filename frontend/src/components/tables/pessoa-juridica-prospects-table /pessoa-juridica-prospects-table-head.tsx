@@ -45,7 +45,6 @@ export function PessoaJuridicaProspectsTableHead(
           return (
             <TableCell
               key={content.id}
-              width={'25%'}
               align="left"
               padding="normal"
               sortDirection={sortDirection}
