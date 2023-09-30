@@ -307,5 +307,32 @@ export const prospectReducer = createReducer(
           }
         }
       );
+
+    designer
+      .addCase(
+        prospectActions.deletePessoaJuridicaProspect.pending,
+        (state) => ({
+          ...state,
+          submitting: true,
+        })
+      )
+      .addCase(
+        prospectActions.deletePessoaJuridicaProspect.fulfilled,
+        (state) => {
+          state.alertMessage = 'Prospect has been deleted successfully!';
+          state.showAlertModal = true;
+          state.submitting = false;
+        }
+      )
+      .addCase(
+        prospectActions.deletePessoaJuridicaProspect.rejected,
+        (state, { error }) => {
+          if (error.message) {
+            state.alertMessage = error.message;
+            state.showAlertModal = true;
+          }
+          state.submitting = false;
+        }
+      );
   }
 );

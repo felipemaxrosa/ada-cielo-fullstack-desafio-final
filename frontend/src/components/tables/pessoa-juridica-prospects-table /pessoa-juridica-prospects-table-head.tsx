@@ -64,6 +64,7 @@ export function PessoaJuridicaProspectsTableHead(
             </TableCell>
           );
         })}
+        <TableCell align="right"></TableCell>
       </TableRow>
     </TableHead>
   );

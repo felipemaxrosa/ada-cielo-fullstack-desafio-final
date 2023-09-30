@@ -11,6 +11,7 @@ import {
   Paper,
   IconButton,
   Tooltip,
+  Box,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -104,24 +105,30 @@ export const PessoaFisicaProspectsTable: FC<
                   <TableCell align="left">{row.mcc}</TableCell>
                   <TableCell align="left">{row.contactEmail}</TableCell>
                   <TableCell align="right" padding="normal">
-                    <Tooltip title="Editar Prospect">
-                      <IconButton
-                        aria-label="edit"
-                        onClick={() => handleEditClick(row)}
-                        sx={{ marginRight: 1 }}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      justifyContent="flex-end"
+                      gap={1}
+                    >
+                      <Tooltip title="Editar Prospect">
+                        <IconButton
+                          aria-label="edit"
+                          onClick={() => handleEditClick(row)}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
 
-                    <Tooltip title="Deletar Prospect">
-                      <IconButton
-                        aria-label="delete"
-                        onClick={() => handleDeleteClick(row.id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
+                      <Tooltip title="Deletar Prospect">
+                        <IconButton
+                          aria-label="delete"
+                          onClick={() => handleDeleteClick(row.id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
                   </TableCell>
                 </TableRow>
               );
