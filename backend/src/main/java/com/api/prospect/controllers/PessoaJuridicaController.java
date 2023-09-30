@@ -28,7 +28,7 @@ public class PessoaJuridicaController {
   @PostMapping
   public ResponseEntity<Object> addNewProspectPessoaJuridica(@RequestBody @Valid PessoaJuridicaDto pessoaJuridicaDto) {
     if (pessoaJuridicaRepository.existsByCnpj(pessoaJuridicaDto.getCnpj())) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: CNPJ is already in use!");
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: CNPJ já está em uso!");
     }
 
     var pessoaJuridicaModel = new PessoaJuridicaModel();
@@ -54,7 +54,7 @@ public class PessoaJuridicaController {
     Optional<PessoaJuridicaModel> pessoaJuridicaModelOptional = pessoaJuridicaRepository.findById(id);
 
     if (!pessoaJuridicaModelOptional.isPresent()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Juridica not found.");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Jurídica não encontrado.");
     }
 
     var pessoaJuridicaModel = new PessoaJuridicaModel();
@@ -78,7 +78,7 @@ public class PessoaJuridicaController {
     Optional<PessoaJuridicaModel> pessoaJuridicaModelOptional = pessoaJuridicaRepository.findById(id);
 
     if (!pessoaJuridicaModelOptional.isPresent()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Juridica not found.");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Jurídica não encontrado.");
     }
 
     return ResponseEntity.status(HttpStatus.OK).body(pessoaJuridicaModelOptional.get());
@@ -89,12 +89,12 @@ public class PessoaJuridicaController {
     Optional<PessoaJuridicaModel> pessoaJuridicaModelOptional = pessoaJuridicaRepository.findById(id);
 
     if (!pessoaJuridicaModelOptional.isPresent()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Juridica not found.");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Jurídica não encontrado.");
     }
 
     pessoaJuridicaRepository.delete(pessoaJuridicaModelOptional.get());
 
-    return ResponseEntity.status(HttpStatus.OK).body("Prospect Pessoa Juridica has been deleted successfully!");
+    return ResponseEntity.status(HttpStatus.OK).body("Prospect Pessoa Juridica foi deletado com sucesso!");
   }
 
   @GetMapping

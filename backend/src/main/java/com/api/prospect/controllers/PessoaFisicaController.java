@@ -4,6 +4,7 @@ import com.api.prospect.dtos.PessoaFisicaDto;
 import com.api.prospect.models.PessoaFisicaModel;
 import com.api.prospect.repositories.PessoaFisicaRepository;
 import com.api.prospect.utils.StringUtils;
+import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,11 @@ public class PessoaFisicaController {
 
   private final Queue<PessoaFisicaModel> prospectQueue = new LinkedList<>();
 
+  @ApiOperation(value ="Adiciona um novo Prospect de Pessoa Fisica")
   @PostMapping
   public ResponseEntity<Object> addNewProspectPessoaFisica(@RequestBody @Valid PessoaFisicaDto pessoaFisicaDto) {
     if (pessoaFisicaRepository.existsByCpf(pessoaFisicaDto.getCpf())) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: CPF is already in use!");
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: CPF já está em uso!");
     }
 
     var pessoaFisicaModel = new PessoaFisicaModel();
@@ -50,7 +52,7 @@ public class PessoaFisicaController {
     Optional<PessoaFisicaModel> pessoaFisicaModelOptional = pessoaFisicaRepository.findById(id);
 
     if (!pessoaFisicaModelOptional.isPresent()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Fisica not found.");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Física não encontrado.");
     }
 
     var pessoaFisicaModel = new PessoaFisicaModel();
@@ -71,7 +73,7 @@ public class PessoaFisicaController {
     Optional<PessoaFisicaModel> pessoaFisicaModelOptional = pessoaFisicaRepository.findById(id);
 
     if (!pessoaFisicaModelOptional.isPresent()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Fisica not found.");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Física não encontrado.");
     }
 
     return ResponseEntity.status(HttpStatus.OK).body(pessoaFisicaModelOptional.get());
@@ -82,11 +84,11 @@ public class PessoaFisicaController {
     Optional<PessoaFisicaModel> pessoaFisicaModelOptional = pessoaFisicaRepository.findById(id);
 
     if (!pessoaFisicaModelOptional.isPresent()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Fisica not found.");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prospect Pessoa Física não encontrado.");
     }
     pessoaFisicaRepository.delete(pessoaFisicaModelOptional.get());
 
-    return ResponseEntity.status(HttpStatus.OK).body("Prospect Pessoa Fisica has been deleted successfully!");
+    return ResponseEntity.status(HttpStatus.OK).body("Prospect Pessoa Fisica foi deletado com sucesso.");
   }
 
   @GetMapping
@@ -107,7 +109,7 @@ public class PessoaFisicaController {
       return ResponseEntity.status(HttpStatus.OK).body(nextProspect);
     }
 
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The prospect service queue is empty!");
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("A fila de atendimento de prospects está vazia!");
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)

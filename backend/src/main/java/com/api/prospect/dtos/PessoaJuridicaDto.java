@@ -7,33 +7,33 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PessoaJuridicaDto {
-  @Size(max = 14, message = "CNPJ must have at maximum, 14 characters")
-  @NotBlank(message = "CNPJ is required")
-  @NotNull(message = "CNPJ is required")
+  @Size(max = 14, message = "O CNPJ deve ter no máximo 14 caracteres")
+  @NotBlank(message = "CNPJ é obrigatório")
+  @NotNull(message = "CNPJ é obrigatório")
   private String cnpj;
 
-  @Size(max = 50, message = "Corporate name must have at maximum, 50 characters")
-  @NotBlank(message = "Corporate name is required")
-  @NotNull(message = "Corporate name is required")
+  @Size(max = 50, message = "A razão social deve ter no máximo 50 caracteres")
+  @NotBlank(message = "O nome corporativo é obrigatório")
+  @NotNull(message = "O nome corporativo é obrigatório")
   private String corporateName;
 
-  @Size(max = 4, message = "MCC must have at maximum, 4 characters")
-  @NotBlank(message = "MCC (Merchant Category Code) is required")
-  @NotNull(message = "MCC (Merchant Category Code) is required")
+  @Size(max = 4, message = "MCC deve ter no máximo quatro caracteres")
+  @NotBlank(message = "MCC (código de categoria do comerciante) é obrigatório")
+  @NotNull(message = "MCC (código de categoria do comerciante) é obrigatório")
   private String mcc;
 
-  @Size(max = 11, message = "Contact CPF must have at maximum, 11 characters")
-  @NotBlank(message = "Contact CPF is required")
-  @NotNull(message = "Contact CPF is required")
+  @Size(max = 11, message = "O CPF do contato deve ter no máximo 11 caracteres")
+  @NotBlank(message = "CPF de contato é obrigatório")
+  @NotNull(message = "CPF de contato é obrigatório")
   private String contactCpf;
 
-  @Size(max = 50, message = "Contact name must have at maximum, 50 characters")
-  @NotBlank(message = "Contact name is required")
-  @NotNull(message = "Contact name is required")
+  @Size(max = 50, message = "O nome do contato deve ter no máximo 50 caracteres")
+  @NotBlank(message = "O nome do contato é obrigatório")
+  @NotNull(message = "O nome do contato é obrigatório")
   private String contactName;
 
-  @NotBlank(message = "Email is required")
-  @NotNull(message = "Email is required")
-  @Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", message = "Invalid email format")
+  @NotBlank(message = "O e-mail é obrigatório")
+  @NotNull(message = "O e-mail é obrigatório")
+  @Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", message = "Formato de email inválido")
   private String contactEmail;
 }

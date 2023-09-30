@@ -10,23 +10,23 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PessoaFisicaDto {
-  @Size(max = 11, message = "CPF must have at maximum, 11 characters")
-  @NotBlank(message = "CPF is required")
-  @NotNull(message = "CPF is required")
+  @Size(max = 11, message = "O CPF deve ter no máximo 11 caracteres")
+  @NotBlank(message = "CPF é obrigatório")
+  @NotNull(message = "CPF é obrigatório")
   private String cpf;
 
-  @Size(max = 4, message = "MCC must have at maximum, 4 characters")
-  @NotBlank(message = "MCC (Merchant Category Code) is required")
-  @NotNull(message = "MCC (Merchant Category Code) is required")
+  @Size(max = 4, message = "MCC deve ter no máximo quatro caracteres")
+  @NotBlank(message = "MCC (código de categoria do comerciante) é obrigatório")
+  @NotNull(message = "MCC (código de categoria do comerciante) é obrigatório")
   private String mcc;
 
-  @Size(max = 50, message = "Contact name must have at maximum, 50 characters")
-  @NotBlank(message = "Contact name is required")
-  @NotNull(message = "Contact name is required")
+  @Size(max = 50, message = "O nome do contato deve ter no máximo 50 caracteres")
+  @NotBlank(message = "O nome do contato é obrigatório")
+  @NotNull(message = "O nome do contato é obrigatório")
   private String contactName;
 
-  @NotBlank(message = "Email is required")
-  @NotNull(message = "Email is required")
-  @Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", message = "Invalid email format")
+  @NotBlank(message = "O email é obrigatório")
+  @NotNull(message = "O email é obrigatório")
+  @Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", message = "Formato de email inválido")
   private String contactEmail;
 }
