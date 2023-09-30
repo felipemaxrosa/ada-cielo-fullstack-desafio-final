@@ -1,17 +1,7 @@
-import {
-  Toolbar,
-  Typography,
-  Button,
-  Grid,
-  Box,
-  IconButton,
-  Tooltip,
-} from '@mui/material';
+import { Toolbar, Typography, Button, Grid, Box } from '@mui/material';
 import { SxProps, Theme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
-import AddIcon from '@mui/icons-material/Add';
-import NextIcon from '@mui/icons-material/NavigateNext';
 
 import { APP_ROUTES } from '../../../constants';
 import { useAppDispatch } from '../../../store';
@@ -64,17 +54,6 @@ export function PessoaFisicaProspectsTableToolbar() {
         </Typography>
 
         <Box display="flex" gap={1}>
-          {/* <Tooltip title="Novo Prospect">
-            <IconButton>
-              <AddIcon />
-            </IconButton>
-          </Tooltip>
-
-          <Tooltip title="Proximo Prospect">
-            <IconButton>
-              <NextIcon />
-            </IconButton>
-          </Tooltip> */}
           <Button variant="outlined" onClick={handleNewProspectButtonClick}>
             Novo
           </Button>
