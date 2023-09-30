@@ -9,7 +9,12 @@ import {
   TablePagination,
   TableRow,
   Paper,
+  Tooltip,
+  IconButton,
+  Box,
 } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { PessoaJuridicaProspect, SortOrder } from '../../../models/interfaces';
 import { getComparator, stableSort } from '../../../utils';
@@ -17,7 +22,10 @@ import { PessoaJuridicaProspectsTableToolbar } from './pessoa-juridica-prospects
 import { PessoaJuridicaProspectsTableHead } from './pessoa-juridica-prospects-table-head';
 import { tableHeads } from './constants';
 import { useAppDispatch } from '../../../store';
-import { setPessoaJuridicaProspect } from '../../../store/actions/prospect-actions';
+import {
+  deletePessoaJuridicaProspect,
+  setPessoaJuridicaProspect,
+} from '../../../store/actions/prospect-actions';
 import { APP_ROUTES } from '../../../constants';
 
 interface PessoaJuridicaProspectsTableProps {
@@ -51,9 +59,13 @@ export const PessoaJuridicaProspectsTable: FC<
     setPage(0);
   };
 
-  const handleRowClick = (prospect: PessoaJuridicaProspect) => {
+  const handleEditClick = (prospect: PessoaJuridicaProspect) => {
     dispatch(setPessoaJuridicaProspect(prospect));
     navigate(APP_ROUTES.PESSOA_JURIDICA);
+  };
+
+  const handleDeleteClick = (id: number) => {
+    dispatch(deletePessoaJuridicaProspect(id));
   };
 
   const emptyRows =
@@ -86,12 +98,7 @@ export const PessoaJuridicaProspectsTable: FC<
           <TableBody>
             {sortedRows.map((row) => {
               return (
-                <TableRow
-                  hover
-                  key={row.id}
-                  sx={{ cursor: 'pointer' }}
-                  onClick={() => handleRowClick(row)}
-                >
+                <TableRow hover key={row.id}>
                   <TableCell align="left">{row.id}</TableCell>
                   <TableCell align="left">{row.cnpj}</TableCell>
                   <TableCell align="left">{row.corporateName}</TableCell>
@@ -99,6 +106,33 @@ export const PessoaJuridicaProspectsTable: FC<
                   <TableCell align="left">{row.contactCpf}</TableCell>
                   <TableCell align="left">{row.contactName}</TableCell>
                   <TableCell align="left">{row.contactEmail}</TableCell>
+
+                  <TableCell align="right" padding="normal">
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      justifyContent="flex-end"
+                      gap={1}
+                    >
+                      <Tooltip title="Editar Prospect">
+                        <IconButton
+                          aria-label="edit"
+                          onClick={() => handleEditClick(row)}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+
+                      <Tooltip title="Deletar Prospect">
+                        <IconButton
+                          aria-label="delete"
+                          onClick={() => handleDeleteClick(row.id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  </TableCell>
                 </TableRow>
               );
             })}

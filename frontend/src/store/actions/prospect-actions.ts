@@ -43,6 +43,8 @@ const CLEAR_PESSOA_JURIDICA_PROSPECT_ERRORS =
 const ON_CHANGE_PESSOA_JURIDICA_PROSPECT =
   'PROSPECT/ON_CHANGE_PESSOA_JURIDICA_PROSPECT';
 const SAVE_PESSOA_JURIDICA_PROSPECT = 'PROSPECT/SAVE_PESSOA_JURIDICA_PROSPECT';
+const DELETE_PESSOA_JURIDICA_PROSPECT =
+  'PROSPECT/DELETE_PESSOA_JURIDICA_PROSPECT';
 
 /**
  * GENERAL ACTIONS
@@ -169,6 +171,20 @@ export const savePessoaJuridicaProspect = createAsyncThunk<
 
         return Promise.reject(JSON.stringify(handledErrors));
       }
+    }
+  }
+);
+
+export const deletePessoaJuridicaProspect = createAsyncThunk<void, number>(
+  DELETE_PESSOA_JURIDICA_PROSPECT,
+  async (id, { dispatch }) => {
+    try {
+      await pessoaJuridicaProspectService.deleteProspect(id);
+      dispatch(bootstrap());
+    } catch (error) {
+      const handledError = (error as AxiosError)?.response?.data as string;
+
+      return Promise.reject(handledError);
     }
   }
 );
