@@ -28,9 +28,9 @@ function getNextProspect() {
   );
 }
 
-function deleteProspect(prospect: PessoaFisicaProspect) {
+function deleteProspect(prospectId: number) {
   return api.delete<PessoaFisicaProspect>(
-    `${SERVICES_URL.PROSPECT_PESSOA_FISICA.BASE_URL}/${prospect.id}`
+    `${SERVICES_URL.PROSPECT_PESSOA_FISICA.BASE_URL}/${prospectId}`
   );
 }
 

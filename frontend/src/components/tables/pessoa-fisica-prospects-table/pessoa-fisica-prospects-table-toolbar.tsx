@@ -1,7 +1,17 @@
-import { Toolbar, Typography, Button, Grid } from '@mui/material';
+import {
+  Toolbar,
+  Typography,
+  Button,
+  Grid,
+  Box,
+  IconButton,
+  Tooltip,
+} from '@mui/material';
 import { SxProps, Theme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import AddIcon from '@mui/icons-material/Add';
+import NextIcon from '@mui/icons-material/NavigateNext';
 
 import { APP_ROUTES } from '../../../constants';
 import { useAppDispatch } from '../../../store';
@@ -37,6 +47,10 @@ export function PessoaFisicaProspectsTableToolbar() {
     await getNextPessoaFisicaProspect();
   };
 
+  const handleNewProspectButtonClick = () => {
+    navigate(APP_ROUTES.PESSOA_FISICA);
+  };
+
   const toolbarSx: SxProps<Theme> = {
     pl: { sm: 2 },
     pr: { xs: 1, sm: 1 },
@@ -49,9 +63,25 @@ export function PessoaFisicaProspectsTableToolbar() {
           Pessoa Fisica
         </Typography>
 
-        <Button variant="contained" onClick={handleNextProspectButtonClick}>
-          NEXT PROSPECT
-        </Button>
+        <Box display="flex" gap={1}>
+          {/* <Tooltip title="Novo Prospect">
+            <IconButton>
+              <AddIcon />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="Proximo Prospect">
+            <IconButton>
+              <NextIcon />
+            </IconButton>
+          </Tooltip> */}
+          <Button variant="outlined" onClick={handleNewProspectButtonClick}>
+            Novo
+          </Button>
+          <Button variant="outlined" onClick={handleNextProspectButtonClick}>
+            Proximo
+          </Button>
+        </Box>
       </Grid>
     </Toolbar>
   );

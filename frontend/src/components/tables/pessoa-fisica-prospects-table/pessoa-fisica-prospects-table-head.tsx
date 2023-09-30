@@ -40,7 +40,6 @@ export function ProspectsPessoaFisicaTableHead(props: FeedbackTableHeadProps) {
           return (
             <TableCell
               key={content.id}
-              width={'25%'}
               align="left"
               padding="normal"
               sortDirection={sortDirection}
@@ -60,6 +59,7 @@ export function ProspectsPessoaFisicaTableHead(props: FeedbackTableHeadProps) {
             </TableCell>
           );
         })}
+        <TableCell align="right" padding="normal"></TableCell>
       </TableRow>
     </TableHead>
   );

@@ -9,7 +9,11 @@ import {
   TablePagination,
   TableRow,
   Paper,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { PessoaFisicaProspect, SortOrder } from '../../../models/interfaces';
 import { getComparator, stableSort } from '../../../utils';
@@ -17,7 +21,10 @@ import { PessoaFisicaProspectsTableToolbar } from './pessoa-fisica-prospects-tab
 import { ProspectsPessoaFisicaTableHead } from './pessoa-fisica-prospects-table-head';
 import { tableHeads } from './constants';
 import { useAppDispatch } from '../../../store';
-import { setPessoaFisicaProspect } from '../../../store/actions/prospect-actions';
+import {
+  deletePessoaFisicaProspect,
+  setPessoaFisicaProspect,
+} from '../../../store/actions/prospect-actions';
 import { APP_ROUTES } from '../../../constants';
 
 interface PessoaFisicaProspectsTableProps {
@@ -51,9 +58,13 @@ export const PessoaFisicaProspectsTable: FC<
     setPage(0);
   };
 
-  const handleRowClick = (prospect: PessoaFisicaProspect) => {
+  const handleEditClick = (prospect: PessoaFisicaProspect) => {
     dispatch(setPessoaFisicaProspect(prospect));
     navigate(APP_ROUTES.PESSOA_FISICA);
+  };
+
+  const handleDeleteClick = (id: number) => {
+    dispatch(deletePessoaFisicaProspect(id));
   };
 
   const emptyRows =
@@ -86,17 +97,32 @@ export const PessoaFisicaProspectsTable: FC<
           <TableBody>
             {sortedRows.map((row) => {
               return (
-                <TableRow
-                  hover
-                  key={row.id}
-                  sx={{ cursor: 'pointer' }}
-                  onClick={() => handleRowClick(row)}
-                >
+                <TableRow hover key={row.id}>
                   <TableCell align="left">{row.id}</TableCell>
                   <TableCell align="left">{row.contactName}</TableCell>
                   <TableCell align="left">{row.cpf}</TableCell>
                   <TableCell align="left">{row.mcc}</TableCell>
                   <TableCell align="left">{row.contactEmail}</TableCell>
+                  <TableCell align="right" padding="normal">
+                    <Tooltip title="Editar Prospect">
+                      <IconButton
+                        aria-label="edit"
+                        onClick={() => handleEditClick(row)}
+                        sx={{ marginRight: 1 }}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+
+                    <Tooltip title="Deletar Prospect">
+                      <IconButton
+                        aria-label="delete"
+                        onClick={() => handleDeleteClick(row.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
                 </TableRow>
               );
             })}

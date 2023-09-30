@@ -197,6 +197,30 @@ export const prospectReducer = createReducer(
         }
       );
 
+    designer
+      .addCase(prospectActions.deletePessoaFisicaProspect.pending, (state) => ({
+        ...state,
+        submitting: true,
+      }))
+      .addCase(
+        prospectActions.deletePessoaFisicaProspect.fulfilled,
+        (state) => {
+          state.alertMessage = 'Prospect has been deleted successfully!';
+          state.showAlertModal = true;
+          state.submitting = false;
+        }
+      )
+      .addCase(
+        prospectActions.deletePessoaFisicaProspect.rejected,
+        (state, { error }) => {
+          if (error.message) {
+            state.alertMessage = error.message;
+            state.showAlertModal = true;
+          }
+          state.submitting = false;
+        }
+      );
+
     /**
      * PESSOA JURIDICA PROSPECT
      */

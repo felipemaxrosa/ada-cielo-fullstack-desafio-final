@@ -31,6 +31,7 @@ const CLEAR_PESSOA_FISICA_PROSPECT_ERRORS =
 const ON_CHANGE_PESSOA_FISICA_PROSPECT =
   'PROSPECT/ON_CHANGE_PESSOA_FISICA_PROSPECT';
 const SAVE_PESSOA_FISICA_PROSPECT = 'PROSPECT/SAVE_PESSOA_FISICA_PROSPECT';
+const DELETE_PESSOA_FISICA_PROSPECT = 'PROSPECT/DELETE_PESSOA_FISICA_PROSPECT';
 
 const SET_PESSOA_JURIDICA_PROSPECT = 'PROSPECT/SET_PESSOA_JURIDICA_PROSPECT';
 const SET_PESSOA_JURIDICA_PROSPECT_ERRORS =
@@ -111,6 +112,19 @@ export const savePessoaFisicaProspect = createAsyncThunk<
 
         return Promise.reject(JSON.stringify(handledErrors));
       }
+    }
+  }
+);
+export const deletePessoaFisicaProspect = createAsyncThunk<void, number>(
+  DELETE_PESSOA_FISICA_PROSPECT,
+  async (id, { dispatch }) => {
+    try {
+      await pessoaFisicaProspectService.deleteProspect(id);
+      dispatch(bootstrap());
+    } catch (error) {
+      const handledError = (error as AxiosError)?.response?.data as string;
+
+      return Promise.reject(handledError);
     }
   }
 );
