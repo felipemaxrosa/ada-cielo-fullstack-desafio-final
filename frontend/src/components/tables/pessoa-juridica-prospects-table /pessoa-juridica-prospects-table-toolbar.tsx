@@ -1,4 +1,4 @@
-import { Button, Grid, Toolbar, Typography } from '@mui/material';
+import { Box, Button, Grid, Toolbar, Typography } from '@mui/material';
 import { SxProps, Theme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
@@ -37,6 +37,10 @@ export function PessoaJuridicaProspectsTableToolbar() {
     await getNextPessoaJuridicaProspect();
   };
 
+  const handleNewProspectButtonClick = () => {
+    navigate(APP_ROUTES.PESSOA_JURIDICA);
+  };
+
   const toolbarSx: SxProps<Theme> = {
     pl: { sm: 2 },
     pr: { xs: 1, sm: 1 },
@@ -49,9 +53,14 @@ export function PessoaJuridicaProspectsTableToolbar() {
           Pessoa Juridica
         </Typography>
 
-        <Button variant="contained" onClick={handleNextProspectButtonClick}>
-          NEXT PROSPECT
-        </Button>
+        <Box display="flex" gap={1}>
+          <Button variant="outlined" onClick={handleNewProspectButtonClick}>
+            Novo
+          </Button>
+          <Button variant="outlined" onClick={handleNextProspectButtonClick}>
+            Proximo
+          </Button>
+        </Box>
       </Grid>
     </Toolbar>
   );
